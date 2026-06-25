@@ -1,0 +1,201 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum MatchStatus {
+  SCHEDULED
+  LIVE
+  COMPLETED
+  POSTPONED
+}
+
+enum MatchRound {
+  GROUP_STAGE
+  R32
+  R16
+  QF
+  SF
+  THIRD_PLACE
+  FINAL
+}
+
+enum TicketCategory {
+  CAT1
+  CAT2
+  CAT3
+  CAT4
+  ACCESSIBILITY
+}
+
+enum DeliveryMethod {
+  INSTANT_PDF
+  WITHIN_72H
+  FIFA_APP_TRANSFER
+}
+
+enum ListingStatus {
+  ACTIVE
+  SOLD
+  EXPIRED
+  REMOVED
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  DELIVERED
+  COMPLETED
+  REFUNDED
+  DISPUTED
+}
+
+enum Role {
+  BUYER
+  SELLER
+  ADMIN
+}
+
+model Match {
+  id           String          @id @default(cuid())
+  slug         String          @unique
+  matchNumber  Int
+  round        MatchRound
+  group        String?
+  homeTeamId   String
+  awayTeamId   String
+  stadiumId    String
+  kickoffUtc   DateTime
+  status       MatchStatus     @default(SCHEDULED)
+  
+  homeTeam     Team            @relation("HomeMatches", fields: [homeTeamId], references: [id])
+  awayTeam     Team            @relation("AwayMatches", fields: [awayTeamId], references: [id])
+  stadium      Stadium         @relation(fields: [stadiumId], references: [id])
+  listings     TicketListing[]
+}
+
+model TicketListing {
+  id             String         @id @default(cuid())
+  matchId        String
+  sellerId       String?        // null = admin-owned
+  category       TicketCategory
+  section        String?
+  row            String?
+  seat           String?
+  quantity       Int
+  pricePerTicket Float
+  currency       String
+  deliveryMethod DeliveryMethod
+  status         ListingStatus  @default(ACTIVE)
+  
+  match          Match          @relation(fields: [matchId], references: [id])
+  seller         User?          @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  orders         Order[]
+}
+
+model Order {
+  id                   String        @id @default(cuid())
+  reference            String        @unique // TUNI-2026-XXXXXXXX
+  listingId            String
+  buyerEmail           String
+  buyerName            String
+  buyerPhone           String
+  quantity             Int
+  subtotal             Float
+  serviceFee           Float
+  total                Float
+  currency             String
+  stripePaymentIntentId String?
+  refundProtection     Boolean       @default(false)
+  status               OrderStatus   @default(PENDING)
+  ticketHolders        Json?
+  
+  listing              TicketListing @relation(fields: [listingId], references: [id])
+}
+
+model Stadium {
+  id          String  @id @default(cuid())
+  name        String
+  slug        String  @unique
+  city        String
+  countryCode String
+  capacity    Int
+  latitude    Float?
+  longitude   Float?
+  imageUrl    String?
+  mapUrl      String?
+  
+  matches     Match[]
+}
+
+model Team {
+  id             String  @id @default(cuid())
+  name           String
+  slug           String  @unique
+  countryCode    String
+  flagUrl        String?
+  confederation  String?
+  coachName      String?
+  fifaRanking    Int?
+  
+  homeMatches    Match[] @relation("HomeMatches")
+  awayMatches    Match[] @relation("AwayMatches")
+}
+
+// --- NextAuth Models ---
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id              String          @id @default(cuid())
+  name            String?
+  email           String?         @unique
+  emailVerified   DateTime?
+  image           String?
+  role            Role            @default(BUYER)
+  stripeConnectId String?
+  kycStatus       String?
+  createdAt       DateTime        @default(now())
+  
+  accounts        Account[]
+  sessions        Session[]
+  listings        TicketListing[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
