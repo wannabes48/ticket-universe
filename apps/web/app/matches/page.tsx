@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { prisma } from "@ticketuniverse/database";
 import MatchesClient from "./MatchesClient";
 
@@ -33,7 +34,9 @@ export default async function MatchesPage() {
         <h1 className="text-4xl font-black text-foreground mb-4">All Matches</h1>
         <p className="text-muted-foreground mb-8 text-lg">Find tickets for all 104 matches of the 2026 FIFA World Cup.</p>
         
-        <MatchesClient initialMatches={matches} teams={teams} stadiums={stadiums} />
+        <Suspense fallback={<div>Loading matches...</div>}>
+          <MatchesClient initialMatches={matches} teams={teams} stadiums={stadiums} />
+        </Suspense>
       </div>
     </div>
   );
