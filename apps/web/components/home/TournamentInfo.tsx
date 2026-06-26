@@ -1,18 +1,23 @@
-import { Globe2, Calendar, MapPin, Trophy, LayoutGrid } from "lucide-react";
+import { Trophy, LayoutGrid } from "lucide-react";
+import Image from "next/image";
 
 export default function TournamentInfo() {
   const stats = [
-    { icon: <Globe2 className="w-6 h-6" />, label: "Teams", value: "48" },
-    { icon: <Calendar className="w-6 h-6" />, label: "Matches", value: "104" },
-    { icon: <MapPin className="w-6 h-6" />, label: "Cities", value: "16" },
-    { icon: <LayoutGrid className="w-6 h-6" />, label: "Stadiums", value: "16" },
-    { icon: <Trophy className="w-6 h-6" />, label: "Days", value: "39" },
+    { icon: <Image src="/icons/icon-teams.png" alt="Teams" width={24} height={24} className="object-contain" />, label: "Teams", value: "48" },
+    { icon: <Image src="/icons/icon-matches.png" alt="Matches" width={24} height={24} className="object-contain" />, label: "Matches", value: "104" },
+    { icon: <Image src="/icons/icon-cities.png" alt="Cities" width={24} height={24} className="object-contain" />, label: "Cities", value: "16" },
+    { icon: <Image src="/icons/icon-stadiums.png" alt="Stadiums" width={24} height={24} className="object-contain" />, label: "Stadiums", value: "16" },
+    { icon: <Image src="/icons/icon-days.png" alt="Days" width={24} height={24} className="object-contain" />, label: "Days", value: "39" },
   ];
 
   return (
-    <div className="w-full py-24 bg-background">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="bg-card border border-border rounded-3xl p-8 lg:p-12 shadow-sm overflow-hidden relative">
+    <div className="w-full py-24 relative bg-background/90">
+      <div 
+        className="absolute inset-0 z-0 opacity-30 mix-blend-luminosity pointer-events-none bg-[url('/bg-tournament.png')] bg-cover bg-center bg-no-repeat bg-fixed" 
+        aria-hidden="true" 
+      />
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="bg-card/70 backdrop-blur-xl border border-border rounded-3xl p-8 lg:p-12 shadow-2xl overflow-hidden relative">
           
           <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
             <Trophy className="w-64 h-64" />
@@ -26,8 +31,8 @@ export default function TournamentInfo() {
 
             <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-16">
               {stats.map((stat, idx) => (
-                <div key={idx} className="bg-muted rounded-2xl p-6 text-center border border-border shadow-sm flex flex-col items-center">
-                  <div className="text-primary mb-3 bg-background p-3 rounded-full shadow-sm">{stat.icon}</div>
+                <div key={idx} className="bg-muted/80 backdrop-blur-sm rounded-2xl p-6 text-center border border-border shadow-sm flex flex-col items-center hover:bg-muted/100 transition-colors">
+                  <div className="text-primary mb-3 bg-background/90 p-3 rounded-full shadow-sm">{stat.icon}</div>
                   <div className="text-3xl font-black text-foreground mb-1">{stat.value}</div>
                   <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">{stat.label}</div>
                 </div>

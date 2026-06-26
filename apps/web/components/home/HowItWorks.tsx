@@ -8,7 +8,7 @@ export default function HowItWorks() {
       desc: "Browse all 104 World Cup 2026 matches by date, team, or host city to find the perfect game."
     },
     {
-      icon: "/icons/icon-seats.png",
+      icon: "/icons/waiting-room.png",
       title: "Step 2 — Choose Your Seats",
       desc: "Filter available listings by category, price, and stadium location to secure your spot."
     },

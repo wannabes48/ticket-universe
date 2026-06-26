@@ -4,19 +4,19 @@ export default function CategoriesExplainer() {
   const categories = [
     {
       id: "Category 1",
-      icon: "/icons/icon-audience.png",
+      icon: "/icons/movie-ticket.png",
       desc: "Premium central seating along the touchlines. The best views in the stadium.",
       color: "border-yellow-500"
     },
     {
       id: "Category 2",
-      icon: "/icons/icon-ticket.png",
+      icon: "/icons/icon-seats.png",
       desc: "Excellent views located in the corners or adjacent to the central areas.",
       color: "border-blue-500"
     },
     {
       id: "Category 3",
-      icon: "/icons/icon-seats.png",
+      icon: "/icons/people.png",
       desc: "Standard seating located behind the goals in the lower and upper tiers.",
       color: "border-green-500"
     },
@@ -54,7 +54,7 @@ export default function CategoriesExplainer() {
 
         <div className="bg-primary/5 border border-primary/20 rounded-xl p-8 flex flex-col md:flex-row items-center gap-8">
           <div className="flex-shrink-0 bg-primary/10 p-4 rounded-full">
-            <Image src="/icons/icon-seats.png" alt="Accessibility" width={40} height={40} className="object-contain" />
+            <Image src="/icons/wheelchair-access.png" alt="Accessibility" width={40} height={40} className="object-contain" />
           </div>
           <div>
             <h3 className="text-xl font-bold mb-2">Accessibility Tickets</h3>
