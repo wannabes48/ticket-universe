@@ -80,14 +80,14 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
             className="fixed inset-0 bg-black/60 z-[100] backdrop-blur-sm"
           />
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-card border border-border rounded-3xl p-8 z-[101] shadow-2xl overflow-hidden"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 250 }}
+            className="fixed top-0 right-0 h-full w-full max-w-md bg-card border-l border-border p-6 sm:p-8 z-[101] shadow-2xl overflow-y-auto flex flex-col"
           >
             {/* Background Accent */}
-            <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-primary/20 to-transparent opacity-50 pointer-events-none" />
+            <div className="absolute top-0 left-0 w-full h-48 bg-gradient-to-b from-primary/10 to-transparent opacity-50 pointer-events-none" />
 
             <button
               onClick={onClose}
@@ -202,9 +202,11 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               </button>
             </div>
 
-            <p className="text-xs text-center text-muted-foreground mt-8 relative z-10">
-              By continuing, you agree to Ticket Universe's Terms of Service and Privacy Policy.
-            </p>
+            <div className="mt-auto pt-8">
+              <p className="text-xs text-center text-muted-foreground relative z-10">
+                By continuing, you agree to Ticket Universe's Terms of Service and Privacy Policy.
+              </p>
+            </div>
           </motion.div>
         </>
       )}
