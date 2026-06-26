@@ -53,6 +53,8 @@ enum OrderStatus {
   COMPLETED
   REFUNDED
   DISPUTED
+  FAILED
+  CANCELLED
 }
 
 enum Role {

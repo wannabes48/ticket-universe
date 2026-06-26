@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { CreditCard, User, Mail, ShieldCheck, ArrowRight, ArrowLeft, ShieldAlert, CheckCircle2, Lock } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { CustomSpinner } from "./ui/custom-spinner";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { Button } from "@/components/ui/button";
@@ -56,6 +57,7 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
   const [orderRef, setOrderRef] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [paymentStatus, setPaymentStatus] = useState<'success' | 'processing' | 'failed' | null>(null);
 
   // Math
   const currentCategory = categories.find(c => c.id === selectedCategory);
@@ -68,6 +70,36 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
   const prevStep = () => setStep(s => Math.max(s - 1, 1));
 
   useEffect(() => {
+    const saved = localStorage.getItem('tuni_checkout_state');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (parsed.buyerDetails && !buyerDetails.email) setBuyerDetails(parsed.buyerDetails);
+        if (parsed.orderRef && !orderRef) setOrderRef(parsed.orderRef);
+      } catch (e) {}
+    }
+
+    const clientSecretFromUrl = new URLSearchParams(window.location.search).get('payment_intent_client_secret');
+    if (clientSecretFromUrl) {
+      setStep(5);
+      stripePromise.then(stripe => {
+        if (!stripe) return;
+        stripe.retrievePaymentIntent(clientSecretFromUrl).then(({ paymentIntent }) => {
+          if (!paymentIntent) return;
+          if (paymentIntent.status === 'succeeded') {
+            setPaymentStatus('success');
+          } else if (paymentIntent.status === 'processing') {
+            setPaymentStatus('processing');
+          } else {
+            setPaymentStatus('failed');
+          }
+        });
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('payment_intent_client_secret')) return; // skip updating URL if returning from Stripe
     let url = `/matches/${match.id}`;
     if (step === 1) url = `/matches/${match.id}/checkout`;
     if (step === 2) url = `/checkout/details`;
@@ -81,10 +113,24 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
   const preparePayment = async () => {
     setIsProcessing(true);
     try {
+      const newOrderRef = `TUNI-2026-${Math.floor(1000000 + Math.random() * 9000000)}`;
+      setOrderRef(newOrderRef);
+      localStorage.setItem('tuni_checkout_state', JSON.stringify({ buyerDetails, orderRef: newOrderRef }));
+
       const res = await fetch('/api/checkout/payment-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: total, listingId: match.id })
+        body: JSON.stringify({ 
+          amount: total, 
+          listingId: match.id,
+          buyerDetails,
+          ticketHolders,
+          quantity,
+          subtotal,
+          serviceFee,
+          refundProtection,
+          orderRef: newOrderRef
+        })
       });
       const data = await res.json();
       setClientSecret(data.clientSecret);
@@ -112,32 +158,53 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
       <div className="bg-card border border-border rounded-2xl shadow-xl overflow-hidden flex flex-col h-[650px] items-center justify-center p-8 text-center relative">
         <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary to-blue-500" />
         
-        <div className="w-24 h-24 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mb-6">
-          <CheckCircle2 className="w-12 h-12" />
-        </div>
-        
-        <h2 className="text-3xl font-black mb-2">Tickets Secured!</h2>
-        <p className="text-muted-foreground mb-6">Your digital tickets have been securely sent to <strong>{buyerDetails.email}</strong>.</p>
-        
-        <div className="bg-muted p-4 rounded-xl border border-border w-full mb-8">
-          <p className="text-sm text-muted-foreground uppercase tracking-wider mb-1">Order Reference</p>
-          <p className="font-mono text-xl font-bold text-foreground">{orderRef}</p>
-        </div>
-
-        {!buyerDetails.createAccount && (
-          <div className="bg-primary/5 border border-primary/20 rounded-xl p-6 w-full text-left mb-6">
-            <h4 className="font-bold mb-2 flex items-center gap-2"><User className="w-4 h-4 text-primary"/> Track Your Order</h4>
-            <p className="text-sm text-muted-foreground mb-4">Set a password to easily access and download your tickets at any time.</p>
-            <div className="flex gap-2">
-              <input type="password" placeholder="Create password" className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary" />
-              <button className="bg-primary text-primary-foreground px-4 py-2 rounded-lg font-bold text-sm whitespace-nowrap">Save</button>
+        {paymentStatus === 'processing' ? (
+          <>
+            <div className="w-24 h-24 bg-blue-500/10 text-blue-500 rounded-full flex items-center justify-center mb-6">
+              <CustomSpinner className="w-12 h-12" />
             </div>
-          </div>
-        )}
+            <h2 className="text-3xl font-black mb-2">Processing Payment</h2>
+            <p className="text-muted-foreground mb-6">We are waiting for confirmation from your bank or payment provider. You'll receive an email as soon as it's confirmed!</p>
+          </>
+        ) : paymentStatus === 'failed' ? (
+          <>
+            <div className="w-24 h-24 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mb-6">
+              <ShieldAlert className="w-12 h-12" />
+            </div>
+            <h2 className="text-3xl font-black mb-2 text-red-500">Payment Failed</h2>
+            <p className="text-muted-foreground mb-6">Your payment was declined or canceled. Please try a different payment method.</p>
+            <Button onClick={() => setStep(4)} className="w-full max-w-xs">Try Again</Button>
+          </>
+        ) : (
+          <>
+            <div className="w-24 h-24 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mb-6">
+              <CheckCircle2 className="w-12 h-12" />
+            </div>
+            
+            <h2 className="text-3xl font-black mb-2">Tickets Secured!</h2>
+            <p className="text-muted-foreground mb-6">Your digital tickets have been securely sent to <strong>{buyerDetails.email || 'your email'}</strong>.</p>
+            
+            <div className="bg-muted p-4 rounded-xl border border-border w-full mb-8">
+              <p className="text-sm text-muted-foreground uppercase tracking-wider mb-1">Order Reference</p>
+              <p className="font-mono text-xl font-bold text-foreground">{orderRef}</p>
+            </div>
 
-        <button onClick={() => { setStep(1); window.history.pushState({}, '', `/matches/${match.id}`); }} className="font-bold text-primary hover:underline">
-          Return to Match
-        </button>
+            {!buyerDetails.createAccount && (
+              <div className="bg-primary/5 border border-primary/20 rounded-xl p-6 w-full text-left mb-6">
+                <h4 className="font-bold mb-2 flex items-center gap-2"><User className="w-4 h-4 text-primary"/> Track Your Order</h4>
+                <p className="text-sm text-muted-foreground mb-4">Set a password to easily access and download your tickets at any time.</p>
+                <div className="flex gap-2">
+                  <input type="password" placeholder="Create password" className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary" />
+                  <button className="bg-primary text-primary-foreground px-4 py-2 rounded-lg font-bold text-sm whitespace-nowrap">Save</button>
+                </div>
+              </div>
+            )}
+
+            <button onClick={() => { setStep(1); window.history.pushState({}, '', `/matches/${match.id}`); }} className="font-bold text-primary hover:underline">
+              Return to Match
+            </button>
+          </>
+        )}
       </div>
     );
   }
@@ -384,7 +451,7 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
                   <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: 'stripe' } }}>
                     <StripePaymentForm 
                       onSuccess={() => {
-                        setOrderRef(`TUNI-2026-${Math.floor(1000000 + Math.random() * 9000000)}`);
+                        setPaymentStatus('success');
                         nextStep();
                       }} 
                       setIsProcessing={setIsProcessing} 

@@ -34,7 +34,7 @@ export async function POST(request: Request) {
       where: { stripePaymentIntentId: paymentIntent.id }
     });
 
-    if (order) {
+    if (order && order.status !== 'PAID') {
       await prisma.order.update({
         where: { id: order.id },
         data: { status: 'PAID' }
@@ -46,6 +46,20 @@ export async function POST(request: Request) {
         data: { status: 'SOLD' } // Or decrement quantity if partial sale
       });
     }
+  } else if (event.type === 'payment_intent.payment_failed') {
+    const paymentIntent = event.data.object as Stripe.PaymentIntent;
+    
+    await prisma.order.updateMany({
+      where: { stripePaymentIntentId: paymentIntent.id },
+      data: { status: 'FAILED' }
+    });
+  } else if (event.type === 'payment_intent.canceled') {
+    const paymentIntent = event.data.object as Stripe.PaymentIntent;
+    
+    await prisma.order.updateMany({
+      where: { stripePaymentIntentId: paymentIntent.id },
+      data: { status: 'CANCELLED' }
+    });
   }
 
   return NextResponse.json({ received: true });
