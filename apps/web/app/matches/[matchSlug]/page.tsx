@@ -124,14 +124,36 @@ export default async function MatchDetailPage({ params }: { params: { matchSlug:
                 <span className="font-bold">{match.stadium.capacity.toLocaleString()}</span>
               </div>
 
-              {/* Mock Google Map Embed */}
-              <div className="w-full h-48 bg-muted border border-border rounded-lg mb-6 relative overflow-hidden flex items-center justify-center group">
-                <div className="absolute inset-0 bg-[url('https://maps.googleapis.com/maps/api/staticmap?center=40.7128,-74.0060&zoom=13&size=400x200&key=YOUR_API_KEY_MOCK')] bg-cover bg-center opacity-50" />
-                <MapPin className="w-8 h-8 text-primary relative z-10" />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span className="text-white font-bold text-sm bg-primary px-3 py-1 rounded-md shadow-sm">View on Maps</span>
+              {/* Stadium Map Embed */}
+              {match.stadium.mapUrl ? (
+                <div className="w-full h-48 border border-border rounded-lg mb-6 relative overflow-hidden flex items-center justify-center group bg-white p-2">
+                  <Image src={match.stadium.mapUrl} alt={`Map of ${match.stadium.name}`} fill className="object-contain p-2" />
+                  {match.stadium.interactiveMapUrl && (
+                    <a 
+                      href={match.stadium.interactiveMapUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <span className="text-white font-bold text-sm bg-primary px-4 py-2 rounded-lg shadow-md">View Interactive Map</span>
+                    </a>
+                  )}
                 </div>
-              </div>
+              ) : (
+                <div className="w-full h-48 bg-muted border border-border rounded-lg mb-6 relative overflow-hidden flex items-center justify-center group">
+                  <MapPin className="w-8 h-8 text-primary relative z-10" />
+                  {match.stadium.interactiveMapUrl && (
+                    <a 
+                      href={match.stadium.interactiveMapUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <span className="text-white font-bold text-sm bg-primary px-3 py-1 rounded-md shadow-sm">View on Map</span>
+                    </a>
+                  )}
+                </div>
+              )}
 
               <a href="https://www.fifa.com/tournaments/mens/worldcup/canadamexicousa2026" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 w-full bg-primary/10 text-primary hover:bg-primary/20 py-3 rounded-xl font-semibold transition-colors text-sm">
                 Official FIFA Travel Guide <ExternalLink className="w-4 h-4" />

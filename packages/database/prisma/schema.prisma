@@ -129,6 +129,7 @@ model Stadium {
   longitude   Float?
   imageUrl    String?
   mapUrl      String?
+  interactiveMapUrl String?
   
   matches     Match[]
 }
