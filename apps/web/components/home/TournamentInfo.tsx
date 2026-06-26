@@ -1,21 +1,29 @@
-import { Trophy, LayoutGrid } from "lucide-react";
+import { Globe2, Calendar, MapPin, Trophy, LayoutGrid } from "lucide-react";
 import Image from "next/image";
 
 export default function TournamentInfo() {
   const stats = [
-    { icon: <Image src="/icons/icon-teams.png" alt="Teams" width={24} height={24} className="object-contain" />, label: "Teams", value: "48" },
-    { icon: <Image src="/icons/icon-matches.png" alt="Matches" width={24} height={24} className="object-contain" />, label: "Matches", value: "104" },
-    { icon: <Image src="/icons/icon-cities.png" alt="Cities" width={24} height={24} className="object-contain" />, label: "Cities", value: "16" },
-    { icon: <Image src="/icons/icon-stadiums.png" alt="Stadiums" width={24} height={24} className="object-contain" />, label: "Stadiums", value: "16" },
-    { icon: <Image src="/icons/icon-days.png" alt="Days" width={24} height={24} className="object-contain" />, label: "Days", value: "39" },
+    { icon: <Globe2 className="w-6 h-6" />, label: "Teams", value: "48" },
+    { icon: <Calendar className="w-6 h-6" />, label: "Matches", value: "104" },
+    { icon: <MapPin className="w-6 h-6" />, label: "Cities", value: "16" },
+    { icon: <LayoutGrid className="w-6 h-6" />, label: "Stadiums", value: "16" },
+    { icon: <Trophy className="w-6 h-6" />, label: "Days", value: "39" },
   ];
 
   return (
-    <div className="w-full py-24 relative bg-background/90">
-      <div 
-        className="absolute inset-0 z-0 opacity-30 mix-blend-luminosity pointer-events-none bg-[url('/bg-tournament.png')] bg-cover bg-center bg-no-repeat bg-fixed" 
-        aria-hidden="true" 
-      />
+    <div className="w-full py-24 relative overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/bg-tournament.png"
+          alt="Tournament Background"
+          fill
+          className="object-cover opacity-30"
+          quality={100}
+        />
+        <div className="absolute inset-0 bg-background/80" />
+      </div>
+
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="bg-card/70 backdrop-blur-xl border border-border rounded-3xl p-8 lg:p-12 shadow-2xl overflow-hidden relative">
           
