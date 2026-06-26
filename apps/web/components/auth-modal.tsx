@@ -83,11 +83,11 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 250 }}
-            className="fixed top-0 right-0 h-full w-full max-w-md bg-card border-l border-border p-6 sm:p-8 z-[101] shadow-2xl overflow-y-auto flex flex-col"
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed top-0 right-0 h-full w-full sm:max-w-md bg-card border-l border-border p-6 sm:p-8 z-[101] shadow-2xl overflow-y-auto flex flex-col"
           >
             {/* Background Accent */}
-            <div className="absolute top-0 left-0 w-full h-48 bg-gradient-to-b from-primary/10 to-transparent opacity-50 pointer-events-none" />
+            <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-primary/20 to-transparent opacity-50 pointer-events-none" />
 
             <button
               onClick={onClose}
@@ -202,11 +202,9 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               </button>
             </div>
 
-            <div className="mt-auto pt-8">
-              <p className="text-xs text-center text-muted-foreground relative z-10">
-                By continuing, you agree to Ticket Universe's Terms of Service and Privacy Policy.
-              </p>
-            </div>
+            <p className="text-xs text-center text-muted-foreground mt-auto pt-8 relative z-10">
+              By continuing, you agree to Ticket Universe's Terms of Service and Privacy Policy.
+            </p>
           </motion.div>
         </>
       )}
