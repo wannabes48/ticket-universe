@@ -64,8 +64,8 @@ export default async function Home() {
   }));
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-start w-full bg-background overflow-hidden">
-      <div className="w-full relative h-[100vh]">
+    <main className="flex min-h-screen flex-col items-center justify-start w-full bg-transparent overflow-hidden">
+      <div className="w-full relative h-[100vh] bg-background z-10">
         <DemoOne />
       </div>
       

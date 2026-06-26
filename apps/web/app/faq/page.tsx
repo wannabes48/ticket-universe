@@ -23,7 +23,7 @@ export default function FaqPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-background py-20">
+    <div className="min-h-screen bg-transparent py-20">
       <div className="max-w-3xl mx-auto px-6">
         <h1 className="text-4xl md:text-5xl font-black tracking-tighter mb-4 text-center">Frequently Asked Questions</h1>
         <p className="text-lg text-muted-foreground text-center mb-16">

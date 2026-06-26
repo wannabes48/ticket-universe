@@ -29,7 +29,7 @@ export default async function MatchesPage() {
   });
 
   return (
-    <div className="min-h-screen bg-background pt-24 pb-20">
+    <div className="min-h-screen bg-transparent pt-24 pb-20">
       <div className="max-w-7xl mx-auto px-6">
         <h1 className="text-4xl font-black text-foreground mb-4">All Matches</h1>
         <p className="text-muted-foreground mb-8 text-lg">Find tickets for all 104 matches of the 2026 FIFA World Cup.</p>

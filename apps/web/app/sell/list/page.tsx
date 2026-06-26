@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function SellListPage() {
   return (
-    <div className="min-h-screen bg-background py-16">
+    <div className="min-h-screen bg-transparent py-16">
       <div className="max-w-3xl mx-auto px-6">
         <Link href="/sell" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground font-medium mb-8 transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back

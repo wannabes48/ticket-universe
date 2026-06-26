@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function BuyerProtectionPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-transparent">
       <div className="bg-[#111827] text-white py-24 text-center relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-600/20 rounded-full blur-3xl -z-10" />
         <div className="max-w-4xl mx-auto px-6 relative z-10">

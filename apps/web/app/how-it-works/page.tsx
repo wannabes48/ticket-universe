@@ -3,7 +3,7 @@ import { Search, Ticket, CheckCircle2, ShieldCheck, CreditCard, Banknote } from 
 
 export default function HowItWorksPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-transparent">
       <div className="bg-primary text-primary-foreground py-20 text-center">
         <div className="max-w-4xl mx-auto px-6">
           <h1 className="text-4xl md:text-6xl font-black tracking-tighter mb-6">How Ticket Universe Works</h1>

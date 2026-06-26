@@ -9,7 +9,7 @@ export default async function CitiesPage() {
   });
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-transparent">
       <div className="bg-primary text-primary-foreground py-16">
         <div className="max-w-7xl mx-auto px-6">
           <h1 className="text-4xl md:text-5xl font-black tracking-tighter mb-4">Host Cities</h1>

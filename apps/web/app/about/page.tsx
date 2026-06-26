@@ -1,6 +1,6 @@
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-background py-20">
+    <div className="min-h-screen bg-transparent py-20">
       <div className="max-w-4xl mx-auto px-6 prose prose-lg dark:prose-invert">
         <h1 className="text-4xl md:text-6xl font-black tracking-tighter mb-8 text-center not-prose">About Ticket Universe</h1>
         
