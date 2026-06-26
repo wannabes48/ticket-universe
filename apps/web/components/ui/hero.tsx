@@ -1,9 +1,10 @@
 /* eslint-disable */
 // @ts-nocheck
 "use client"
-import { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState, useTransition } from "react"
 import { MeshGradient, PulsingBorder } from "@paper-design/shaders-react"
 import { motion } from "framer-motion"
+import { Button } from "./button"
 
 const MeshGradientAny = MeshGradient as any;
 const PulsingBorderAny = PulsingBorder as any;
@@ -11,6 +12,7 @@ const PulsingBorderAny = PulsingBorder as any;
 export default function ShaderShowcase() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [isActive, setIsActive] = useState(false)
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     const handleMouseEnter = () => setIsActive(true)
@@ -156,20 +158,28 @@ export default function ShaderShowcase() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.0 }}
           >
-            <motion.button
-              className="px-10 py-4 rounded-full bg-transparent border-2 border-white/30 text-white font-medium text-sm transition-all duration-300 hover:bg-white/10 hover:border-cyan-400/50 hover:text-cyan-100 cursor-pointer backdrop-blur-sm"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <Button
+              variant="outline"
+              size="lg"
+              className="border-white/30 text-white hover:bg-white/10 hover:border-cyan-400/50 hover:text-cyan-100 backdrop-blur-sm"
+              onClick={() => {
+                document.getElementById('upcoming-matches')?.scrollIntoView({ behavior: 'smooth' });
+              }}
             >
               View Matches
-            </motion.button>
-            <motion.button
-              className="px-10 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-orange-500 text-white font-semibold text-sm transition-all duration-300 hover:from-cyan-400 hover:to-orange-400 cursor-pointer shadow-lg hover:shadow-xl"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            </Button>
+            <Button
+              variant="gradient"
+              size="lg"
+              isLoading={isPending}
+              onClick={() => {
+                startTransition(() => {
+                  window.location.href = '/matches';
+                });
+              }}
             >
               Buy Tickets
-            </motion.button>
+            </Button>
           </motion.div>
         </div>
       </main>

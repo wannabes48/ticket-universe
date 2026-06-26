@@ -13,12 +13,17 @@ interface TicketListingRowProps {
   onToggle: () => void;
 }
 
+import { Button } from "./ui/button";
+
 export function TicketListingRow({ listing, matchSlug, isExpanded, onToggle }: TicketListingRowProps) {
   const router = useRouter();
+  const [isPending, startTransition] = React.useTransition();
 
   const handleBuy = (e: React.MouseEvent) => {
     e.stopPropagation();
-    router.push(`/matches/${matchSlug}/checkout?listingId=${listing.id}`);
+    startTransition(() => {
+      router.push(`/matches/${matchSlug}/checkout?listingId=${listing.id}`);
+    });
   };
 
   return (
@@ -48,12 +53,13 @@ export function TicketListingRow({ listing, matchSlug, isExpanded, onToggle }: T
         <td className="p-4 font-black hidden sm:table-cell">${listing.pricePerTicket * listing.quantity}</td>
         <td className="p-4 text-right">
           <div className="flex items-center justify-end gap-3">
-            <button 
+            <Button 
+              size="sm"
+              isLoading={isPending}
               onClick={handleBuy}
-              className="bg-primary text-primary-foreground px-4 py-2 rounded-lg font-bold text-sm hover:bg-primary/90 transition-colors shadow-sm"
             >
               Buy
-            </button>
+            </Button>
             {isExpanded ? <ChevronUp className="w-5 h-5 text-muted-foreground" /> : <ChevronDown className="w-5 h-5 text-muted-foreground" />}
           </div>
         </td>

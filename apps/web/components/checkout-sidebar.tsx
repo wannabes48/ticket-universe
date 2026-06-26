@@ -4,7 +4,11 @@ import { useState, useEffect } from "react";
 import { CreditCard, User, Mail, ShieldCheck, ArrowRight, ArrowLeft, ShieldAlert, CheckCircle2, Lock } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { loadStripe } from "@stripe/stripe-js";
+import { Button } from "@/components/ui/button";
 import { CustomSelect } from "@/components/custom-select";
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
 
 export default function CheckoutSidebar({ match, categories }: { match: any, categories: any[] }) {
   const [step, setStep] = useState(1);
@@ -358,17 +362,14 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
             {step === 1 ? 'Continue to Checkout' : 'Continue'} <ArrowRight className="w-4 h-4" />
           </button>
         ) : (
-          <button 
+          <Button 
             onClick={handlePayment} 
             disabled={isProcessing}
-            className="flex-1 bg-primary text-primary-foreground py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors shadow-lg disabled:opacity-70"
+            isLoading={isProcessing}
+            className="flex-1 w-full"
           >
-            {isProcessing ? (
-              <span className="flex items-center gap-2"><div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin"/> Processing...</span>
-            ) : (
-              <>Pay ${total.toFixed(2)} Securely <ShieldCheck className="w-4 h-4" /></>
-            )}
-          </button>
+            Pay ${total.toFixed(2)} Securely <ShieldCheck className="w-4 h-4" />
+          </Button>
         )}
       </div>
     </div>
