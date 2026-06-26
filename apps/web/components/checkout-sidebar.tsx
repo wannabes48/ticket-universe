@@ -58,6 +58,7 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
   const [isProcessing, setIsProcessing] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [paymentStatus, setPaymentStatus] = useState<'success' | 'processing' | 'failed' | null>(null);
+  const [timeLeft, setTimeLeft] = useState(600); // 10 minutes countdown
 
   // Math
   const currentCategory = categories.find(c => c.id === selectedCategory);
@@ -109,6 +110,18 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
     
     window.history.pushState({}, '', url);
   }, [step, match.id]);
+
+  useEffect(() => {
+    if (step === 5 || timeLeft <= 0) return;
+    const timer = setInterval(() => setTimeLeft(t => t - 1), 1000);
+    return () => clearInterval(timer);
+  }, [step, timeLeft]);
+
+  const formatTime = (seconds: number) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  };
 
   const preparePayment = async () => {
     setIsProcessing(true);
@@ -209,15 +222,36 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
     );
   }
 
+  if (timeLeft === 0 && step !== 5) {
+    return (
+      <div className="bg-card border border-border rounded-2xl shadow-xl overflow-hidden flex flex-col h-[650px] items-center justify-center p-8 text-center relative">
+        <div className="w-24 h-24 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mb-6">
+          <ShieldAlert className="w-12 h-12" />
+        </div>
+        <h2 className="text-3xl font-black mb-2 text-red-500">Session Expired</h2>
+        <p className="text-muted-foreground mb-6">You took longer than 10 minutes to complete the checkout. For fairness to other fans, your tickets have been released.</p>
+        <button onClick={() => window.location.reload()} className="w-full max-w-xs bg-primary text-primary-foreground py-3 rounded-xl font-bold hover:bg-primary/90 transition-colors">
+          Start Over
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-card border border-border rounded-2xl shadow-xl overflow-hidden flex flex-col h-[650px]">
       <div className="bg-muted p-6 border-b border-border flex-shrink-0">
-        <h2 className="text-xl font-bold flex items-center gap-2">
-          <Image src="/custom-ticket.png" alt="Ticket" width={24} height={24} className="shrink-0" /> {step === 4 ? "Secure Checkout" : "Buy Tickets"}
-        </h2>
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-bold flex items-center gap-2">
+            <Image src="/custom-ticket.png" alt="Ticket" width={24} height={24} className="shrink-0" /> {step === 4 ? "Secure Checkout" : "Buy Tickets"}
+          </h2>
+          <div className="flex items-center gap-1.5 text-sm font-bold bg-background px-3 py-1.5 rounded-lg border border-border text-foreground shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+            {formatTime(timeLeft)}
+          </div>
+        </div>
         
         {/* Progress Bar */}
-        <div className="flex items-center justify-between mt-6 relative">
+        <div className="flex items-center justify-between relative">
           <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-border rounded-full -z-10" />
           <div className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-primary rounded-full -z-10 transition-all duration-300" style={{ width: `${((step - 1) / 3) * 100}%` }} />
           
