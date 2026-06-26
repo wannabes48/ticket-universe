@@ -122,7 +122,7 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           amount: total, 
-          listingId: match.id,
+          listingId: currentCategory?.lowestPriceListingId,
           buyerDetails,
           ticketHolders,
           quantity,

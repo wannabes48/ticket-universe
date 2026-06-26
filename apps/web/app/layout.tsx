@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+// @ts-ignore: side-effect import of CSS without type declarations
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
