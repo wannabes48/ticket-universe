@@ -9,8 +9,14 @@ export default async function TeamDetailPage({ params }: { params: { teamSlug: s
   const team = await prisma.team.findUnique({
     where: { slug: params.teamSlug },
     include: {
-      homeMatches: { include: { homeTeam: true, awayTeam: true, stadium: true, listings: true } },
-      awayMatches: { include: { homeTeam: true, awayTeam: true, stadium: true, listings: true } },
+      homeMatches: { 
+        where: { kickoffUtc: { gt: new Date() } },
+        include: { homeTeam: true, awayTeam: true, stadium: true, listings: true } 
+      },
+      awayMatches: { 
+        where: { kickoffUtc: { gt: new Date() } },
+        include: { homeTeam: true, awayTeam: true, stadium: true, listings: true } 
+      },
     }
   });
 

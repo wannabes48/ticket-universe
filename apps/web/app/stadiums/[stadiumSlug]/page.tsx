@@ -8,7 +8,10 @@ export default async function StadiumDetailPage({ params }: { params: { stadiumS
   const stadium = await prisma.stadium.findUnique({
     where: { slug: params.stadiumSlug },
     include: {
-      matches: { include: { homeTeam: true, awayTeam: true, stadium: true, listings: true } },
+      matches: { 
+        where: { kickoffUtc: { gt: new Date() } },
+        include: { homeTeam: true, awayTeam: true, stadium: true, listings: true } 
+      },
     }
   });
 

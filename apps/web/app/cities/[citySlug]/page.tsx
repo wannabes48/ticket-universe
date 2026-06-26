@@ -7,7 +7,10 @@ import { ArrowLeft, MapPin, Building, Users } from "lucide-react";
 export default async function CityDetailPage({ params }: { params: { citySlug: string } }) {
   const stadiums = await prisma.stadium.findMany({
     include: {
-      matches: { include: { homeTeam: true, awayTeam: true, stadium: true, listings: true } },
+      matches: { 
+        where: { kickoffUtc: { gt: new Date() } },
+        include: { homeTeam: true, awayTeam: true, stadium: true, listings: true } 
+      },
     }
   });
 

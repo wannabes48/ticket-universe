@@ -11,6 +11,7 @@ export async function GET(request: Request) {
     const [matches, teams, stadiums] = await Promise.all([
       prisma.match.findMany({
         where: {
+          kickoffUtc: { gt: new Date() },
           OR: [
             { homeTeam: { name: { contains: query, mode: 'insensitive' } } },
             { awayTeam: { name: { contains: query, mode: 'insensitive' } } },

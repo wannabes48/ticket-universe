@@ -9,7 +9,9 @@ export async function GET(request: Request) {
   const teamId = searchParams.get('teamId');
   const stadiumId = searchParams.get('stadiumId');
 
-  const where: any = {};
+  const where: any = {
+    kickoffUtc: { gt: new Date() }
+  };
   if (round) where.round = round;
   if (group) where.group = group;
   if (teamId) where.OR = [{ homeTeamId: teamId }, { awayTeamId: teamId }];

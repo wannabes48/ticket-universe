@@ -4,6 +4,7 @@ import MatchCard from "@/components/match-card";
 
 export default async function SchedulePage() {
   const matches = await prisma.match.findMany({
+    where: { kickoffUtc: { gt: new Date() } },
     orderBy: { kickoffUtc: 'asc' },
     include: { homeTeam: true, awayTeam: true, stadium: true, listings: true }
   });
