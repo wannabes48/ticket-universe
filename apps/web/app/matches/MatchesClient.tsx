@@ -93,9 +93,9 @@ export default function MatchesClient({ initialMatches, teams, stadiums }: { ini
             value={sortMethod}
             onChange={(e) => setSortMethod(e.target.value)}
           >
-            <option value="date_asc">Sort by: Date (Earliest)</option>
-            <option value="price_asc">Sort by: Price (Lowest)</option>
-            <option value="price_desc">Sort by: Price (Highest)</option>
+            <option value="date_asc">Sort by: Date (earliest first)</option>
+            <option value="price_asc">Sort by: Price (lowest first)</option>
+            <option value="price_desc">Sort by: Price (highest first)</option>
             <option value="tickets_desc">Sort by: Most Tickets Available</option>
           </select>
         </div>

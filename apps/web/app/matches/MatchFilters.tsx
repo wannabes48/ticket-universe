@@ -32,6 +32,14 @@ export default function MatchFilters({ teams, stadiums }: { teams: any[], stadiu
     } else {
       params.delete(key);
     }
+    
+    setLocalFilters(prev => {
+      const next = { ...prev };
+      if (value) next[key] = value;
+      else delete next[key];
+      return next;
+    });
+
     router.push(pathname + "?" + params.toString(), { scroll: false });
   };
 
@@ -50,7 +58,15 @@ export default function MatchFilters({ teams, stadiums }: { teams: any[], stadiu
     router.push(pathname, { scroll: false });
   };
 
-  const rounds = ["GROUP_STAGE", "ROUND_OF_32", "ROUND_OF_16", "QUARTER_FINALS", "SEMI_FINALS", "THIRD_PLACE", "FINAL"];
+  const rounds = [
+    { value: "GROUP_STAGE", label: "Group Stage (Groups A-L)" },
+    { value: "ROUND_OF_32", label: "Round of 32" },
+    { value: "ROUND_OF_16", label: "Round of 16" },
+    { value: "QUARTER_FINALS", label: "Quarter-Finals" },
+    { value: "SEMI_FINALS", label: "Semi-Finals" },
+    { value: "THIRD_PLACE", label: "Third-Place Play-Off" },
+    { value: "FINAL", label: "Final" }
+  ];
   const countries = ["USA", "MEX", "CAN"];
   const categories = ["Category 1", "Category 2", "Category 3", "Category 4", "Accessibility"];
 
@@ -134,11 +150,11 @@ export default function MatchFilters({ teams, stadiums }: { teams: any[], stadiu
             <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wider">Tournament Round</h4>
             <div className="space-y-2">
               {rounds.map(round => (
-                <label key={round} className="flex items-center gap-3 cursor-pointer group" onClick={() => toggleArrayFilter('rounds', round)}>
-                  <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${isChecked('rounds', round) ? 'bg-primary border-primary' : 'border-border bg-background group-hover:border-primary/50'}`}>
-                    {isChecked('rounds', round) && <div className="w-2.5 h-2.5 bg-white rounded-sm" />}
+                <label key={round.value} className="flex items-center gap-3 cursor-pointer group" onClick={() => toggleArrayFilter('rounds', round.value)}>
+                  <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${isChecked('rounds', round.value) ? 'bg-primary border-primary' : 'border-border bg-background group-hover:border-primary/50'}`}>
+                    {isChecked('rounds', round.value) && <div className="w-2.5 h-2.5 bg-white rounded-sm" />}
                   </div>
-                  <span className="text-sm font-medium text-foreground/80 group-hover:text-foreground">{round.replace(/_/g, ' ')}</span>
+                  <span className="text-sm font-medium text-foreground/80 group-hover:text-foreground">{round.label}</span>
                 </label>
               ))}
             </div>
@@ -188,6 +204,21 @@ export default function MatchFilters({ teams, stadiums }: { teams: any[], stadiu
                     {isChecked('cities', city as string) && <div className="w-2.5 h-2.5 bg-white rounded-sm" />}
                   </div>
                   <span className="text-sm font-medium text-foreground/80 group-hover:text-foreground">{city as string}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* Stadium */}
+          <div>
+            <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wider">Stadium</h4>
+            <div className="max-h-40 overflow-y-auto space-y-2 hide-scrollbar">
+              {stadiums.map(stadium => (
+                <label key={stadium.id} className="flex items-center gap-3 cursor-pointer group" onClick={() => toggleArrayFilter('stadiums', stadium.name)}>
+                  <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${isChecked('stadiums', stadium.name) ? 'bg-primary border-primary' : 'border-border bg-background group-hover:border-primary/50'}`}>
+                    {isChecked('stadiums', stadium.name) && <div className="w-2.5 h-2.5 bg-white rounded-sm" />}
+                  </div>
+                  <span className="text-sm font-medium text-foreground/80 group-hover:text-foreground">{stadium.name}</span>
                 </label>
               ))}
             </div>
