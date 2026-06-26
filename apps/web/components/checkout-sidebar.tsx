@@ -59,6 +59,7 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [paymentStatus, setPaymentStatus] = useState<'success' | 'processing' | 'failed' | null>(null);
   const [timeLeft, setTimeLeft] = useState(600); // 10 minutes countdown
+  const [isTimerActive, setIsTimerActive] = useState(false);
 
   // Math
   const currentCategory = categories.find(c => c.id === selectedCategory);
@@ -67,7 +68,10 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
   const protectionFee = refundProtection ? (subtotal + serviceFee) * 0.07 : 0;
   const total = subtotal + serviceFee + protectionFee;
 
-  const nextStep = () => setStep(s => Math.min(s + 1, 5));
+  const nextStep = () => {
+    if (step === 1 && !isTimerActive) setIsTimerActive(true);
+    setStep(s => Math.min(s + 1, 5));
+  };
   const prevStep = () => setStep(s => Math.max(s - 1, 1));
 
   useEffect(() => {
@@ -112,10 +116,10 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
   }, [step, match.id]);
 
   useEffect(() => {
-    if (step === 5 || timeLeft <= 0) return;
+    if (step === 5 || timeLeft <= 0 || !isTimerActive) return;
     const timer = setInterval(() => setTimeLeft(t => t - 1), 1000);
     return () => clearInterval(timer);
-  }, [step, timeLeft]);
+  }, [step, timeLeft, isTimerActive]);
 
   const formatTime = (seconds: number) => {
     const m = Math.floor(seconds / 60);
@@ -244,10 +248,12 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
           <h2 className="text-xl font-bold flex items-center gap-2">
             <Image src="/custom-ticket.png" alt="Ticket" width={24} height={24} className="shrink-0" /> {step === 4 ? "Secure Checkout" : "Buy Tickets"}
           </h2>
-          <div className="flex items-center gap-1.5 text-sm font-bold bg-background px-3 py-1.5 rounded-lg border border-border text-foreground shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-            {formatTime(timeLeft)}
-          </div>
+          {isTimerActive && (
+            <div className="flex items-center gap-1.5 text-sm font-bold bg-background px-3 py-1.5 rounded-lg border border-border text-foreground shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+              {formatTime(timeLeft)}
+            </div>
+          )}
         </div>
         
         {/* Progress Bar */}
@@ -264,7 +270,7 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
       </div>
 
       <div className="flex-1 overflow-y-auto p-6 relative hide-scrollbar">
-        {step < 5 && (
+        {step < 5 && isTimerActive && (
           <div className="bg-primary/10 border border-primary/20 text-primary rounded-xl p-3 mb-6 text-sm flex items-start gap-3">
             <span className="text-xl leading-none">⏱️</span>
             <div>
