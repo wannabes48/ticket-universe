@@ -34,16 +34,16 @@ export function CountdownTimer({ targetDateUtc }: { targetDateUtc: Date | string
       <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary flex-shrink-0">
         <Clock className="w-6 h-6" />
       </div>
-      <div>
+      <div className="min-w-0 flex-1">
         <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-1">Kick-off In</p>
-        <div className="flex items-center gap-1 sm:gap-2 text-foreground font-mono font-bold text-base sm:text-lg tabular-nums">
-          <div className="bg-background border border-border px-2 py-1 rounded shadow-sm text-center">{String(timeLeft.d).padStart(2, '0')}d</div>
-          <span>:</span>
-          <div className="bg-background border border-border px-2 py-1 rounded shadow-sm text-center">{String(timeLeft.h).padStart(2, '0')}h</div>
-          <span>:</span>
-          <div className="bg-background border border-border px-2 py-1 rounded shadow-sm text-center">{String(timeLeft.m).padStart(2, '0')}m</div>
-          <span>:</span>
-          <div className="bg-background border border-border px-2 py-1 rounded shadow-sm text-center text-primary">{String(timeLeft.s).padStart(2, '0')}s</div>
+        <div className="flex items-center gap-1 sm:gap-2 text-foreground font-mono font-bold text-xs sm:text-sm md:text-lg tabular-nums flex-wrap">
+          <div className="bg-background border border-border px-1.5 sm:px-2 py-1 rounded shadow-sm text-center">{String(timeLeft.d).padStart(2, '0')}d</div>
+          <span className="text-muted-foreground">:</span>
+          <div className="bg-background border border-border px-1.5 sm:px-2 py-1 rounded shadow-sm text-center">{String(timeLeft.h).padStart(2, '0')}h</div>
+          <span className="text-muted-foreground">:</span>
+          <div className="bg-background border border-border px-1.5 sm:px-2 py-1 rounded shadow-sm text-center">{String(timeLeft.m).padStart(2, '0')}m</div>
+          <span className="text-muted-foreground">:</span>
+          <div className="bg-background border border-border px-1.5 sm:px-2 py-1 rounded shadow-sm text-center text-primary">{String(timeLeft.s).padStart(2, '0')}s</div>
         </div>
       </div>
     </div>

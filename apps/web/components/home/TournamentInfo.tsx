@@ -10,7 +10,7 @@ export default function TournamentInfo() {
   ];
 
   return (
-    <div className="w-full py-24 bg-transparent">
+    <div className="w-full py-24 bg-background">
       <div className="max-w-7xl mx-auto px-6">
         <div className="bg-card border border-border rounded-3xl p-8 lg:p-12 shadow-sm overflow-hidden relative">
           

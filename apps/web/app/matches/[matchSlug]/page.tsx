@@ -23,7 +23,7 @@ export default async function MatchDetailPage({ params }: { params: { matchSlug:
   if (!match) notFound();
 
   return (
-    <main className="min-h-screen bg-transparent">
+    <main className="min-h-screen bg-background">
       {/* Above the Fold: Match Header */}
       <div className="bg-[#1a1a2e] text-white pt-24 pb-12 relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl h-[500px] bg-primary/20 rounded-full blur-[100px] -z-10" />

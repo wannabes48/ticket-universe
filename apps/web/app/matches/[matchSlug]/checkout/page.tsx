@@ -39,7 +39,7 @@ export default async function CheckoutPage({ params, searchParams }: { params: {
   const categories = Array.from(categoriesMap.values()).sort((a, b) => a.price - b.price);
 
   return (
-    <main className="min-h-screen bg-transparent pt-24 pb-12">
+    <main className="min-h-screen bg-muted/30 pt-24 pb-12">
       <div className="container max-w-6xl mx-auto px-4">
         
         <Link href={`/matches/${match.slug}`} className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-foreground mb-6 transition-colors">

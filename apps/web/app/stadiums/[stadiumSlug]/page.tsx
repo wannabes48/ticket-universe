@@ -20,7 +20,7 @@ export default async function StadiumDetailPage({ params }: { params: { stadiumS
   const sortedMatches = stadium.matches.sort((a, b) => new Date(a.kickoffUtc).getTime() - new Date(b.kickoffUtc).getTime());
 
   return (
-    <div className="min-h-screen bg-transparent">
+    <div className="min-h-screen bg-background">
       <div className="bg-primary text-primary-foreground py-16">
         <div className="max-w-7xl mx-auto px-6 relative">
           <Link href="/stadiums" className="inline-flex items-center gap-2 text-primary-foreground/70 hover:text-white font-medium mb-8 transition-colors">

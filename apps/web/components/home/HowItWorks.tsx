@@ -20,7 +20,7 @@ export default function HowItWorks() {
   ];
 
   return (
-    <div className="w-full py-24 bg-transparent">
+    <div className="w-full py-24 bg-background">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-foreground mb-4">How It Works</h2>

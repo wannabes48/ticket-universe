@@ -38,7 +38,7 @@ export default function BrowseByTeam({ teams }: { teams: TeamWithCount[] }) {
   const confederations = ['UEFA', 'CONMEBOL', 'CONCACAF', 'CAF', 'AFC', 'OFC'];
 
   return (
-    <div className="w-full py-20 bg-transparent">
+    <div className="w-full py-20 bg-muted/30">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-12 text-center max-w-2xl mx-auto">
           <h2 className="text-3xl font-bold text-foreground mb-4">Browse by Team</h2>

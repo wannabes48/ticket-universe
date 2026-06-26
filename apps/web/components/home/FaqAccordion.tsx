@@ -36,7 +36,7 @@ export default function FaqAccordion() {
   ];
 
   return (
-    <div className="w-full py-24 bg-transparent">
+    <div className="w-full py-24 bg-muted/30">
       <div className="max-w-3xl mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-foreground mb-4">Frequently Asked Questions</h2>

@@ -21,8 +21,6 @@ export const metadata: Metadata = {
   },
 };
 
-import { GradientDots } from "@/components/ui/gradient-dots";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -33,7 +31,6 @@ export default function RootLayout({
       <body
         className={`${bricolage.variable} font-sans antialiased`}
       >
-        <GradientDots className="fixed inset-0 -z-50 pointer-events-none" />
         <Navbar />
         {children}
         <Footer />

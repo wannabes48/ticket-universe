@@ -6,7 +6,7 @@ import ThumbnailCarousel from "@/components/ui/thumbnail-carousel";
 
 export default function UpcomingMatchesCarousel({ matches }: { matches: any[] }) {
   return (
-    <div className="w-full py-16 bg-transparent">
+    <div className="w-full py-16 bg-background">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>

@@ -2,7 +2,7 @@ import { ShieldCheck, Lock, CheckCircle, Zap } from "lucide-react";
 
 export default function TrustBar() {
   return (
-    <div className="w-full bg-transparent border-y border-border py-4">
+    <div className="w-full bg-muted border-y border-border py-4">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-4 text-sm font-medium text-muted-foreground">
           <div className="flex items-center gap-2">

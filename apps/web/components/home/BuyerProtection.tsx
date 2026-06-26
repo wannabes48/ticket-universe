@@ -2,7 +2,7 @@ import { ShieldCheck, RefreshCcw, Headset, Ticket, CheckCircle } from "lucide-re
 
 export default function BuyerProtection() {
   return (
-    <div className="w-full py-24 bg-transparent border-y border-border">
+    <div className="w-full py-20 bg-[#1a1a2e] text-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col lg:flex-row gap-16 items-center">
           
