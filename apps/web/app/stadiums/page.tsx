@@ -23,7 +23,6 @@ export default async function StadiumsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {stadiums.map(stadium => {
             return (
-            return (
               <Link key={stadium.id} href={`/stadiums/${stadium.slug}`} className="group relative overflow-hidden bg-card rounded-2xl flex flex-col transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 min-h-[420px]">
                 {/* Background Image */}
                 <div 
