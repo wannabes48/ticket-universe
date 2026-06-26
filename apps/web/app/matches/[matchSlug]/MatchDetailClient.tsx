@@ -72,8 +72,8 @@ export function TicketTable({ listings, matchSlug }: { listings: any[], matchSlu
                 <th className="px-4 py-3 font-semibold text-left hidden md:table-cell">Section</th>
                 <th className="px-4 py-3 font-semibold text-left hidden md:table-cell">Row</th>
                 <th className="px-4 py-3 font-semibold text-center">Qty</th>
-                <th className="px-4 py-3 font-semibold text-right">Price/ea</th>
-                <th className="px-4 py-3 font-semibold text-right">Action</th>
+                <th className="px-4 py-3 font-semibold text-center">Price/ea</th>
+                <th className="px-4 py-3 font-semibold text-center">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">

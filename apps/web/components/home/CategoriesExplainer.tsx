@@ -1,28 +1,28 @@
-import { Ticket, Users, Accessibility, Star } from "lucide-react";
+import Image from "next/image";
 
 export default function CategoriesExplainer() {
   const categories = [
     {
       id: "Category 1",
-      icon: <Star className="w-6 h-6 text-yellow-500" />,
+      icon: "/icons/icon-audience.png",
       desc: "Premium central seating along the touchlines. The best views in the stadium.",
       color: "border-yellow-500"
     },
     {
       id: "Category 2",
-      icon: <Ticket className="w-6 h-6 text-blue-500" />,
+      icon: "/icons/icon-search.png",
       desc: "Excellent views located in the corners or adjacent to the central areas.",
       color: "border-blue-500"
     },
     {
       id: "Category 3",
-      icon: <Users className="w-6 h-6 text-green-500" />,
+      icon: "/icons/icon-check.png",
       desc: "Standard seating located behind the goals in the lower and upper tiers.",
       color: "border-green-500"
     },
     {
       id: "Category 4",
-      icon: <Ticket className="w-6 h-6 text-muted-foreground" />,
+      icon: "/icons/icon-audience.png",
       desc: "Outermost seating areas offering budget-friendly access to the match.",
       color: "border-muted-foreground"
     }
@@ -44,7 +44,7 @@ export default function CategoriesExplainer() {
           {categories.map(cat => (
             <div key={cat.id} className={`bg-card border-t-4 ${cat.color} rounded-b-xl border-x border-b p-6 shadow-sm`}>
               <div className="flex items-center gap-3 mb-4">
-                {cat.icon}
+                <Image src={cat.icon} alt={cat.id} width={36} height={36} className="object-contain" />
                 <h3 className="font-bold text-lg">{cat.id}</h3>
               </div>
               <p className="text-muted-foreground text-sm leading-relaxed">{cat.desc}</p>
@@ -54,7 +54,7 @@ export default function CategoriesExplainer() {
 
         <div className="bg-primary/5 border border-primary/20 rounded-xl p-8 flex flex-col md:flex-row items-center gap-8">
           <div className="flex-shrink-0 bg-primary/10 p-4 rounded-full">
-            <Accessibility className="w-8 h-8 text-primary" />
+            <Image src="/icons/icon-seats.png" alt="Accessibility" width={40} height={40} className="object-contain" />
           </div>
           <div>
             <h3 className="text-xl font-bold mb-2">Accessibility Tickets</h3>

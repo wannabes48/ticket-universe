@@ -1,19 +1,19 @@
-import { Search, Map, CreditCard } from "lucide-react";
+import Image from "next/image";
 
 export default function HowItWorks() {
   const steps = [
     {
-      icon: <Search className="w-8 h-8 text-primary" />,
+      icon: "/icons/icon-seats.png",
       title: "Step 1 — Find Your Match",
       desc: "Browse all 104 World Cup 2026 matches by date, team, or host city to find the perfect game."
     },
     {
-      icon: <Map className="w-8 h-8 text-primary" />,
+      icon: "/icons/icon-seats-clock.png",
       title: "Step 2 — Choose Your Seats",
       desc: "Filter available listings by category, price, and stadium location to secure your spot."
     },
     {
-      icon: <CreditCard className="w-8 h-8 text-primary" />,
+      icon: "/icons/icon-payment.png",
       title: "Step 3 — Buy Safely",
       desc: "Pay securely via card, Apple Pay, or PayPal without needing an account. Tickets arrive instantly by email."
     }
@@ -34,7 +34,7 @@ export default function HowItWorks() {
           {steps.map((step, idx) => (
             <div key={idx} className="flex flex-col items-center text-center relative z-10">
               <div className="w-24 h-24 bg-card border-4 border-background rounded-full shadow-lg flex items-center justify-center mb-6">
-                {step.icon}
+                <Image src={step.icon} alt={step.title} width={52} height={52} className="object-contain" />
               </div>
               <h3 className="text-xl font-bold mb-3">{step.title}</h3>
               <p className="text-muted-foreground leading-relaxed max-w-xs">{step.desc}</p>
