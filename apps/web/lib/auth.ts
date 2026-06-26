@@ -1,6 +1,7 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import { prisma } from "@ticketuniverse/database";
 
 export const authOptions: NextAuthOptions = {
@@ -9,6 +10,19 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      profile(profile) {
+        return {
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+          role: "SELLER", // Defaulting to SELLER for the purpose of this flow
+        };
+      },
+    }),
     CredentialsProvider({
       name: "Mock Credentials (Dev Only)",
       credentials: {
@@ -22,12 +36,11 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (!user) {
-          // Auto-provision seller account
           user = await prisma.user.create({
             data: {
               email: credentials.email,
               name: credentials.email.split('@')[0],
-              role: "SELLER" // Default to seller for mock
+              role: "SELLER"
             }
           });
         }
