@@ -1,5 +1,5 @@
-import { Globe2, Calendar, MapPin, Trophy, LayoutGrid } from "lucide-react";
 import Image from "next/image";
+import { Globe2, Calendar, MapPin, Trophy, LayoutGrid } from "lucide-react";
 
 export default function TournamentInfo() {
   const stats = [
@@ -11,24 +11,12 @@ export default function TournamentInfo() {
   ];
 
   return (
-    <div className="w-full py-24 relative overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/bg-tournament.png"
-          alt="Tournament Background"
-          fill
-          className="object-cover opacity-30"
-          quality={100}
-        />
-        <div className="absolute inset-0 bg-background/80" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="bg-card/70 backdrop-blur-xl border border-border rounded-3xl p-8 lg:p-12 shadow-2xl overflow-hidden relative">
+    <div className="w-full py-24 bg-background">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="bg-card border border-border rounded-3xl p-8 lg:p-12 shadow-sm overflow-hidden relative">
           
-          <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
-            <Trophy className="w-64 h-64" />
+          <div className="absolute top-0 right-0 p-8 opacity-25 pointer-events-none">
+            <Image src="/world-cup-logo.png" alt="World Cup Logo" width={256} height={256} className="object-contain" />
           </div>
 
           <div className="relative z-10">
@@ -39,8 +27,8 @@ export default function TournamentInfo() {
 
             <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-16">
               {stats.map((stat, idx) => (
-                <div key={idx} className="bg-muted/80 backdrop-blur-sm rounded-2xl p-6 text-center border border-border shadow-sm flex flex-col items-center hover:bg-muted/100 transition-colors">
-                  <div className="text-primary mb-3 bg-background/90 p-3 rounded-full shadow-sm">{stat.icon}</div>
+                <div key={idx} className="bg-muted rounded-2xl p-6 text-center border border-border shadow-sm flex flex-col items-center">
+                  <div className="text-primary mb-3 bg-background p-3 rounded-full shadow-sm">{stat.icon}</div>
                   <div className="text-3xl font-black text-foreground mb-1">{stat.value}</div>
                   <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">{stat.label}</div>
                 </div>
