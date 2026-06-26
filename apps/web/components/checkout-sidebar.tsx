@@ -264,6 +264,16 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
       </div>
 
       <div className="flex-1 overflow-y-auto p-6 relative hide-scrollbar">
+        {step < 5 && (
+          <div className="bg-primary/10 border border-primary/20 text-primary rounded-xl p-3 mb-6 text-sm flex items-start gap-3">
+            <span className="text-xl leading-none">⏱️</span>
+            <div>
+              <strong className="block mb-0.5">Tickets are in high demand</strong>
+              We are holding this session for 10 minutes. Please complete your checkout before the timer expires.
+            </div>
+          </div>
+        )}
+        
         <AnimatePresence mode="wait">
           
           {step === 1 && (
