@@ -22,7 +22,6 @@ export default function MatchCard({ match }: { match: any }) {
                 <div className="text-muted-foreground font-bold">{match.homeTeam?.countryCode || 'TBD'}</div>
               )}
             </div>
-            <span className="font-semibold text-sm text-foreground">{match.homeTeam?.countryCode || 'TBD'}</span>
           </div>
           
           <div className="text-muted-foreground font-bold text-sm bg-background px-3 py-1 rounded-full shadow-sm border border-border">
@@ -37,7 +36,6 @@ export default function MatchCard({ match }: { match: any }) {
                 <div className="text-muted-foreground font-bold">{match.awayTeam?.countryCode || 'TBD'}</div>
               )}
             </div>
-            <span className="font-semibold text-sm text-foreground">{match.awayTeam?.countryCode || 'TBD'}</span>
           </div>
         </div>
         

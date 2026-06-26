@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import CookieBanner from "@/components/cookie-banner";
 import NextTopLoader from 'nextjs-toploader';
 
 import { Bricolage_Grotesque } from "next/font/google";
@@ -42,6 +43,7 @@ export default async function RootLayout({
         <Navbar session={session} />
         {children}
         <Footer />
+        <CookieBanner />
       </body>
     </html>
   );
