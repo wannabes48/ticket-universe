@@ -62,7 +62,7 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
   // Math
   const currentCategory = categories.find(c => c.id === selectedCategory);
   const subtotal = currentCategory ? currentCategory.price * quantity : 0;
-  const serviceFee = subtotal * 0.10; // 10%
+  const serviceFee = subtotal * 0.03; // 3%
   const protectionFee = refundProtection ? (subtotal + serviceFee) * 0.07 : 0;
   const total = subtotal + serviceFee + protectionFee;
 

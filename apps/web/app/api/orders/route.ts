@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     }
 
     const subtotal = listing.pricePerTicket * quantity;
-    const serviceFee = subtotal * 0.10; // 10%
+    const serviceFee = subtotal * 0.03; // 3%
     const total = subtotal + serviceFee + (refundProtection ? subtotal * 0.07 : 0);
 
     const order = await prisma.order.create({

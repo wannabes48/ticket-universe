@@ -101,7 +101,7 @@ export default async function MatchDetailPage({ params }: { params: { matchSlug:
             <h2 className="text-2xl font-bold flex items-center gap-2">
               <Image src="/custom-ticket.png" alt="Ticket" width={24} height={24} /> Available Tickets
             </h2>
-            <p className="text-sm text-muted-foreground">Prices include all taxes. A 10% service fee applies at checkout.</p>
+            <p className="text-sm text-muted-foreground">Prices include all taxes. A 3% service fee applies at checkout.</p>
           </div>
 
           <TicketTable listings={match.listings} matchSlug={match.slug} />

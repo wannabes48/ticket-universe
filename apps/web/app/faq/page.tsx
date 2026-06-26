@@ -14,7 +14,7 @@ export default function FaqPage() {
     },
     {
       q: "Why is there a service fee?",
-      a: "The service fee (typically 10%) covers the cost of our secure payment processing, anti-fraud verification, and 24/7 customer support ensuring your tickets arrive safely."
+      a: "The service fee (typically 3%) covers the cost of our secure payment processing, anti-fraud verification, and 24/7 customer support ensuring your tickets arrive safely."
     },
     {
       q: "Can I sell my spare tickets?",
