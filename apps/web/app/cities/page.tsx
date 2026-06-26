@@ -3,22 +3,22 @@ import Link from "next/link";
 import { MapPin } from "lucide-react";
 
 const cityImages: Record<string, string> = {
-  "Mexico City": "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?q=80&w=800&auto=format&fit=crop",
-  "Guadalajara": "https://images.unsplash.com/photo-1583256037777-62f924fb9da0?q=80&w=800&auto=format&fit=crop",
-  "Toronto": "https://images.unsplash.com/photo-1507992781348-310259076fe0?q=80&w=800&auto=format&fit=crop",
-  "Los Angeles": "https://images.unsplash.com/photo-1515896769750-31548ea180d1?q=80&w=800&auto=format&fit=crop",
-  "Boston": "https://images.unsplash.com/photo-1506501139174-099022df5260?q=80&w=800&auto=format&fit=crop",
-  "Vancouver": "https://images.unsplash.com/photo-1559511260-66a654ae982a?q=80&w=800&auto=format&fit=crop",
-  "New York": "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?q=80&w=800&auto=format&fit=crop",
-  "San Francisco": "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=80&w=800&auto=format&fit=crop",
-  "Philadelphia": "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=800&auto=format&fit=crop",
-  "Houston": "https://images.unsplash.com/photo-1531218150217-5afc40b5c2bf?q=80&w=800&auto=format&fit=crop",
-  "Dallas": "https://images.unsplash.com/photo-1545648710-1845bb08f3eb?q=80&w=800&auto=format&fit=crop",
-  "Monterrey": "https://images.unsplash.com/photo-1589330882655-3d9a5b3a8123?q=80&w=800&auto=format&fit=crop",
-  "Miami": "https://images.unsplash.com/photo-1514214246283-d427a95c5d2f?q=80&w=800&auto=format&fit=crop",
-  "Atlanta": "https://images.unsplash.com/photo-1575917649705-5b59aaa12e6b?q=80&w=800&auto=format&fit=crop",
-  "Seattle": "https://images.unsplash.com/photo-1502175353174-a7a70e73b362?q=80&w=800&auto=format&fit=crop",
-  "Kansas City": "https://images.unsplash.com/photo-1596706912384-9380b2792c30?q=80&w=800&auto=format&fit=crop"
+  "Mexico City": "https://res.cloudinary.com/dm12f7lnc/image/upload/v1780304180/mexicocity_t7bigt.avif",
+  "Guadalajara": "https://res.cloudinary.com/dm12f7lnc/image/upload/v1780304151/guadalajara_r9wo1t.jpg",
+  "Toronto": "https://res.cloudinary.com/dm12f7lnc/image/upload/v1780304148/toronto_bwnsmn.jpg",
+  "Los Angeles": "https://res.cloudinary.com/dm12f7lnc/image/upload/v1780304222/losangeles_v82zbn.jpg",
+  "Boston": "https://res.cloudinary.com/dm12f7lnc/image/upload/v1780304152/boston_a2xiyv.webp",
+  "Vancouver": "https://res.cloudinary.com/dm12f7lnc/image/upload/v1780304153/vancouver_a4k5zl.jpg",
+  "New York": "https://res.cloudinary.com/dm12f7lnc/image/upload/v1780304169/new-york_omfrh6.jpg",
+  "San Francisco": "https://res.cloudinary.com/dm12f7lnc/image/upload/v1780304147/san-francisco-ca_n7lsjj.jpg",
+  "Philadelphia": "https://res.cloudinary.com/dm12f7lnc/image/upload/v1780304157/philadelphia_yny63r.jpg",
+  "Houston": "https://res.cloudinary.com/dm12f7lnc/image/upload/v1780304160/houston-skyline_quwptf.jpg",
+  "Dallas": "https://res.cloudinary.com/dm12f7lnc/image/upload/v1780304161/Skyline-Dallas-Texas_nticby.webp",
+  "Monterrey": "https://res.cloudinary.com/dm12f7lnc/image/upload/v1780304181/monterrey_rabcs0.jpg",
+  "Miami": "https://res.cloudinary.com/dm12f7lnc/image/upload/v1780304169/miami_ltw4at.webp",
+  "Atlanta": "https://res.cloudinary.com/dm12f7lnc/image/upload/v1780304168/atlanta-skyline-georgia_j59ykj.webp",
+  "Seattle": "https://res.cloudinary.com/dm12f7lnc/image/upload/v1780304165/seattle_sdljvu.avif",
+  "Kansas City": "https://res.cloudinary.com/dm12f7lnc/image/upload/v1780304166/kansascity_vvckg7.webp"
 };
 
 export default async function CitiesPage() {
