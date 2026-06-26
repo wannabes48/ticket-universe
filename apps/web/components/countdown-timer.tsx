@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Clock } from "lucide-react";
+import Image from "next/image";
 
 export function CountdownTimer({ targetDateUtc }: { targetDateUtc: Date | string }) {
   const [timeLeft, setTimeLeft] = useState<{ d: number, h: number, m: number, s: number } | null>(null);
@@ -31,8 +31,8 @@ export function CountdownTimer({ targetDateUtc }: { targetDateUtc: Date | string
 
   return (
     <div className="flex items-center gap-4 bg-muted/50 p-4 rounded-xl border border-border mt-6">
-      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary flex-shrink-0">
-        <Clock className="w-6 h-6" />
+      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary flex-shrink-0 relative overflow-hidden">
+        <Image src="/custom-clock.png" alt="Clock" fill className="object-cover p-2" />
       </div>
       <div className="min-w-0 flex-1">
         <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-1">Kick-off In</p>

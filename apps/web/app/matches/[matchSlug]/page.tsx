@@ -21,6 +21,7 @@ export default async function MatchDetailPage({ params }: { params: { matchSlug:
   });
 
   if (!match) notFound();
+  const stadiumInteractiveMapUrl = (match.stadium as any).interactiveMapUrl;
 
   return (
     <main className="min-h-screen bg-background">
@@ -128,9 +129,9 @@ export default async function MatchDetailPage({ params }: { params: { matchSlug:
               {match.stadium.mapUrl ? (
                 <div className="w-full h-48 border border-border rounded-lg mb-6 relative overflow-hidden flex items-center justify-center group bg-white p-2">
                   <Image src={match.stadium.mapUrl} alt={`Map of ${match.stadium.name}`} fill className="object-contain p-2" />
-                  {match.stadium.interactiveMapUrl && (
+                  {stadiumInteractiveMapUrl && (
                     <a 
-                      href={match.stadium.interactiveMapUrl} 
+                      href={stadiumInteractiveMapUrl} 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"
@@ -142,9 +143,9 @@ export default async function MatchDetailPage({ params }: { params: { matchSlug:
               ) : (
                 <div className="w-full h-48 bg-muted border border-border rounded-lg mb-6 relative overflow-hidden flex items-center justify-center group">
                   <MapPin className="w-8 h-8 text-primary relative z-10" />
-                  {match.stadium.interactiveMapUrl && (
+                  {stadiumInteractiveMapUrl && (
                     <a 
-                      href={match.stadium.interactiveMapUrl} 
+                      href={stadiumInteractiveMapUrl} 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"
