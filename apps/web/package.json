@@ -12,6 +12,7 @@
     "@auth/prisma-adapter": "^2.11.2",
     "@paper-design/shaders-react": "0.0.76",
     "@prisma/client": "^5.14.0",
+    "@stripe/react-stripe-js": "^6.6.0",
     "@stripe/stripe-js": "^9.8.0",
     "@ticketuniverse/database": "workspace:*",
     "framer-motion": "12.42.0",

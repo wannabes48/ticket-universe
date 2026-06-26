@@ -5,10 +5,44 @@ import { CreditCard, User, Mail, ShieldCheck, ArrowRight, ArrowLeft, ShieldAlert
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { loadStripe } from "@stripe/stripe-js";
+import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { Button } from "@/components/ui/button";
 import { CustomSelect } from "@/components/custom-select";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
+
+function StripePaymentForm({ onSuccess, setIsProcessing }: { onSuccess: () => void, setIsProcessing: (v: boolean) => void }) {
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!stripe || !elements) return;
+
+    setIsProcessing(true);
+    const { error } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: `${window.location.origin}/checkout/success`,
+      },
+      redirect: 'if_required'
+    });
+
+    if (error) {
+      console.error(error);
+      setIsProcessing(false);
+    } else {
+      setIsProcessing(false);
+      onSuccess();
+    }
+  };
+
+  return (
+    <form id="payment-form" onSubmit={handleSubmit} className="p-4 border border-border rounded-xl bg-background space-y-4">
+      <PaymentElement options={{ layout: 'tabs' }} />
+    </form>
+  );
+}
 
 export default function CheckoutSidebar({ match, categories }: { match: any, categories: any[] }) {
   const [step, setStep] = useState(1);
@@ -21,6 +55,7 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
   const [refundProtection, setRefundProtection] = useState(false);
   const [orderRef, setOrderRef] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
 
   // Math
   const currentCategory = categories.find(c => c.id === selectedCategory);
@@ -43,13 +78,22 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
     window.history.pushState({}, '', url);
   }, [step, match.id]);
 
-  const handlePayment = () => {
+  const preparePayment = async () => {
     setIsProcessing(true);
-    setTimeout(() => {
-      setOrderRef(`TUNI-2026-${Math.floor(1000000 + Math.random() * 9000000)}`);
-      setIsProcessing(false);
+    try {
+      const res = await fetch('/api/checkout/payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: total, listingId: match.id })
+      });
+      const data = await res.json();
+      setClientSecret(data.clientSecret);
       nextStep();
-    }, 1500);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const updateHolder = (index: number, field: 'firstName'|'lastName', value: string) => {
@@ -210,6 +254,18 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
                           { value: "DE", label: "Germany" },
                           { value: "BR", label: "Brazil" },
                           { value: "AR", label: "Argentina" },
+                          { value: "ES", label: "Spain" },
+                          { value: "IT", label: "Italy" },
+                          { value: "AU", label: "Australia" },
+                          { value: "JP", label: "Japan" },
+                          { value: "KR", label: "South Korea" },
+                          { value: "NG", label: "Nigeria" },
+                          { value: "ZA", label: "South Africa" },
+                          { value: "CO", label: "Colombia" },
+                          { value: "CL", label: "Chile" },
+                          { value: "PT", label: "Portugal" },
+                          { value: "NL", label: "Netherlands" },
+                          { value: "SA", label: "Saudi Arabia" },
                         ]}
                         value={buyerDetails.country}
                         onChange={(val) => setBuyerDetails({...buyerDetails, country: val})}
@@ -324,17 +380,21 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
                     <div className="w-8 h-5 bg-background border border-border rounded text-[8px] font-bold flex items-center justify-center">MC</div>
                   </div>
                 </h3>
-                <div className="p-4 border border-border rounded-xl bg-background space-y-4">
-                  <div className="relative">
-                    <CreditCard className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-                    <input type="text" placeholder="Card number" className="w-full bg-background border border-border rounded-lg py-3 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary font-mono" />
+                {clientSecret ? (
+                  <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: 'stripe' } }}>
+                    <StripePaymentForm 
+                      onSuccess={() => {
+                        setOrderRef(`TUNI-2026-${Math.floor(1000000 + Math.random() * 9000000)}`);
+                        nextStep();
+                      }} 
+                      setIsProcessing={setIsProcessing} 
+                    />
+                  </Elements>
+                ) : (
+                  <div className="flex items-center justify-center p-8 bg-background border border-border rounded-xl">
+                    <span className="text-muted-foreground font-medium animate-pulse">Loading secure payment portal...</span>
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <input type="text" placeholder="MM / YY" className="w-full bg-background border border-border rounded-lg py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary font-mono" />
-                    <input type="text" placeholder="CVC" className="w-full bg-background border border-border rounded-lg py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary font-mono" />
-                  </div>
-                  <input type="text" placeholder="Name on card" className="w-full bg-background border border-border rounded-lg py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary" />
-                </div>
+                )}
                 <div className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
                   <Lock className="w-3 h-3" /> Payments are secure and encrypted via Stripe
                 </div>
@@ -355,20 +415,21 @@ export default function CheckoutSidebar({ match, categories }: { match: any, cat
         
         {step < 4 ? (
           <button 
-            onClick={nextStep} 
-            disabled={step === 1 && !selectedCategory}
+            onClick={step === 3 ? preparePayment : nextStep} 
+            disabled={(step === 1 && !selectedCategory) || isProcessing}
             className="flex-1 bg-primary text-primary-foreground py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
           >
-            {step === 1 ? 'Continue to Checkout' : 'Continue'} <ArrowRight className="w-4 h-4" />
+            {isProcessing ? 'Processing...' : (step === 1 ? 'Continue to Checkout' : 'Continue')} {!isProcessing && <ArrowRight className="w-4 h-4" />}
           </button>
         ) : (
           <Button 
-            onClick={handlePayment} 
-            disabled={isProcessing}
+            type="submit"
+            form="payment-form"
+            disabled={isProcessing || !clientSecret}
             isLoading={isProcessing}
             className="flex-1 w-full"
           >
-            Pay ${total.toFixed(2)} Securely <ShieldCheck className="w-4 h-4" />
+            Pay ${total.toFixed(2)} Securely <ShieldCheck className="w-4 h-4 ml-2" />
           </Button>
         )}
       </div>

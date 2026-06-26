@@ -36,14 +36,14 @@ export function CountdownTimer({ targetDateUtc }: { targetDateUtc: Date | string
       </div>
       <div>
         <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-1">Kick-off In</p>
-        <div className="flex items-center gap-1 sm:gap-2 text-foreground font-mono font-bold text-base sm:text-lg">
-          <div className="bg-background border border-border px-2 py-1 rounded shadow-sm min-w-[3.5rem] text-center">{String(timeLeft.d).padStart(2, '0')}d</div>
+        <div className="flex items-center gap-1 sm:gap-2 text-foreground font-mono font-bold text-base sm:text-lg tabular-nums">
+          <div className="bg-background border border-border px-2 py-1 rounded shadow-sm text-center">{String(timeLeft.d).padStart(2, '0')}d</div>
           <span>:</span>
-          <div className="bg-background border border-border px-2 py-1 rounded shadow-sm min-w-[3.5rem] text-center">{String(timeLeft.h).padStart(2, '0')}h</div>
+          <div className="bg-background border border-border px-2 py-1 rounded shadow-sm text-center">{String(timeLeft.h).padStart(2, '0')}h</div>
           <span>:</span>
-          <div className="bg-background border border-border px-2 py-1 rounded shadow-sm min-w-[3.5rem] text-center">{String(timeLeft.m).padStart(2, '0')}m</div>
+          <div className="bg-background border border-border px-2 py-1 rounded shadow-sm text-center">{String(timeLeft.m).padStart(2, '0')}m</div>
           <span>:</span>
-          <div className="bg-background border border-border px-2 py-1 rounded shadow-sm min-w-[3.5rem] text-center text-primary">{String(timeLeft.s).padStart(2, '0')}s</div>
+          <div className="bg-background border border-border px-2 py-1 rounded shadow-sm text-center text-primary">{String(timeLeft.s).padStart(2, '0')}s</div>
         </div>
       </div>
     </div>
