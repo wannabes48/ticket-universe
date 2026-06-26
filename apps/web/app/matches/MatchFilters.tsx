@@ -98,7 +98,17 @@ export default function MatchFilters({ teams, stadiums }: { teams: any[], stadiu
             <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wider">Price Range</h4>
             <div className="flex items-center gap-4 mb-2">
               <span className="text-sm font-medium">${localFilters.priceMin || 100}</span>
-              <input type="range" min="100" max="10000" step="50" className="w-full accent-primary" value={localFilters.priceMax || 10000} onChange={(e) => updateFilter('priceMax', e.target.value)} />
+              <input 
+                type="range" 
+                min="100" 
+                max="10000" 
+                step="50" 
+                className="w-full accent-primary" 
+                value={localFilters.priceMax || 10000} 
+                onChange={(e) => setLocalFilters(prev => ({ ...prev, priceMax: e.target.value }))}
+                onMouseUp={(e) => updateFilter('priceMax', (e.target as HTMLInputElement).value)}
+                onTouchEnd={(e) => updateFilter('priceMax', (e.target as HTMLInputElement).value)}
+              />
               <span className="text-sm font-medium">${localFilters.priceMax || "10k+"}</span>
             </div>
           </div>
@@ -124,7 +134,7 @@ export default function MatchFilters({ teams, stadiums }: { teams: any[], stadiu
             <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wider">Tournament Round</h4>
             <div className="space-y-2">
               {rounds.map(round => (
-                <label key={round} className="flex items-center gap-3 cursor-pointer group">
+                <label key={round} className="flex items-center gap-3 cursor-pointer group" onClick={() => toggleArrayFilter('rounds', round)}>
                   <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${isChecked('rounds', round) ? 'bg-primary border-primary' : 'border-border bg-background group-hover:border-primary/50'}`}>
                     {isChecked('rounds', round) && <div className="w-2.5 h-2.5 bg-white rounded-sm" />}
                   </div>
@@ -143,7 +153,7 @@ export default function MatchFilters({ teams, stadiums }: { teams: any[], stadiu
             </div>
             <div className="max-h-40 overflow-y-auto space-y-2 hide-scrollbar">
               {teams.filter(t => t.name.toLowerCase().includes(teamSearch.toLowerCase())).map(team => (
-                <label key={team.id} className="flex items-center gap-3 cursor-pointer group">
+                <label key={team.id} className="flex items-center gap-3 cursor-pointer group" onClick={() => toggleArrayFilter('teams', team.id)}>
                   <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${isChecked('teams', team.id) ? 'bg-primary border-primary' : 'border-border bg-background group-hover:border-primary/50'}`}>
                     {isChecked('teams', team.id) && <div className="w-2.5 h-2.5 bg-white rounded-sm" />}
                   </div>
@@ -158,7 +168,7 @@ export default function MatchFilters({ teams, stadiums }: { teams: any[], stadiu
             <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wider">Host Country</h4>
             <div className="space-y-2">
               {countries.map(country => (
-                <label key={country} className="flex items-center gap-3 cursor-pointer group">
+                <label key={country} className="flex items-center gap-3 cursor-pointer group" onClick={() => toggleArrayFilter('countries', country)}>
                   <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${isChecked('countries', country) ? 'bg-primary border-primary' : 'border-border bg-background group-hover:border-primary/50'}`}>
                     {isChecked('countries', country) && <div className="w-2.5 h-2.5 bg-white rounded-sm" />}
                   </div>
@@ -173,7 +183,7 @@ export default function MatchFilters({ teams, stadiums }: { teams: any[], stadiu
             <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wider">Host City</h4>
             <div className="max-h-40 overflow-y-auto space-y-2 hide-scrollbar">
               {cities.map(city => (
-                <label key={city as string} className="flex items-center gap-3 cursor-pointer group">
+                <label key={city as string} className="flex items-center gap-3 cursor-pointer group" onClick={() => toggleArrayFilter('cities', city as string)}>
                   <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${isChecked('cities', city as string) ? 'bg-primary border-primary' : 'border-border bg-background group-hover:border-primary/50'}`}>
                     {isChecked('cities', city as string) && <div className="w-2.5 h-2.5 bg-white rounded-sm" />}
                   </div>
@@ -188,7 +198,7 @@ export default function MatchFilters({ teams, stadiums }: { teams: any[], stadiu
             <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wider">Ticket Category</h4>
             <div className="space-y-2">
               {categories.map(cat => (
-                <label key={cat} className="flex items-center gap-3 cursor-pointer group">
+                <label key={cat} className="flex items-center gap-3 cursor-pointer group" onClick={() => toggleArrayFilter('categories', cat)}>
                   <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${isChecked('categories', cat) ? 'bg-primary border-primary' : 'border-border bg-background group-hover:border-primary/50'}`}>
                     {isChecked('categories', cat) && <div className="w-2.5 h-2.5 bg-white rounded-sm" />}
                   </div>

@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import NextTopLoader from 'nextjs-toploader';
 
 import { Bricolage_Grotesque } from "next/font/google";
 
@@ -37,6 +38,7 @@ export default async function RootLayout({
       <body
         className={`${bricolage.variable} font-sans antialiased`}
       >
+        <NextTopLoader color="hsl(var(--primary))" showSpinner={false} />
         <Navbar session={session} />
         {children}
         <Footer />
