@@ -3,12 +3,12 @@ import Image from "next/image";
 export default function HowItWorks() {
   const steps = [
     {
-      icon: "/icons/icon-seats.png",
+      icon: "/icons/icon-search.png",
       title: "Step 1 — Find Your Match",
       desc: "Browse all 104 World Cup 2026 matches by date, team, or host city to find the perfect game."
     },
     {
-      icon: "/icons/icon-seats-clock.png",
+      icon: "/icons/icon-seats.png",
       title: "Step 2 — Choose Your Seats",
       desc: "Filter available listings by category, price, and stadium location to secure your spot."
     },

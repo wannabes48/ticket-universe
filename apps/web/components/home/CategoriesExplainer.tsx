@@ -10,19 +10,19 @@ export default function CategoriesExplainer() {
     },
     {
       id: "Category 2",
-      icon: "/icons/icon-search.png",
+      icon: "/icons/icon-ticket.png",
       desc: "Excellent views located in the corners or adjacent to the central areas.",
       color: "border-blue-500"
     },
     {
       id: "Category 3",
-      icon: "/icons/icon-check.png",
+      icon: "/icons/icon-seats.png",
       desc: "Standard seating located behind the goals in the lower and upper tiers.",
       color: "border-green-500"
     },
     {
       id: "Category 4",
-      icon: "/icons/icon-audience.png",
+      icon: "/icons/icon-ticket.png",
       desc: "Outermost seating areas offering budget-friendly access to the match.",
       color: "border-muted-foreground"
     }
