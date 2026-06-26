@@ -19,7 +19,6 @@ export const authOptions: NextAuthOptions = {
           name: profile.name,
           email: profile.email,
           image: profile.picture,
-          role: "SELLER", // Defaulting to SELLER for the purpose of this flow
         };
       },
     }),

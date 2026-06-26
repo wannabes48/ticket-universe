@@ -22,17 +22,22 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang="en">
       <body
         className={`${bricolage.variable} font-sans antialiased`}
       >
-        <Navbar />
+        <Navbar session={session} />
         {children}
         <Footer />
       </body>

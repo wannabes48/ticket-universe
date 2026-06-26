@@ -2,14 +2,15 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Search, Menu, X, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "@/components/logo";
+import { AuthModal } from "@/components/auth-modal";
 
-export default function Navbar() {
+export default function Navbar({ session }: { session: any }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,13 +58,27 @@ export default function Navbar() {
 
         {/* Right: Actions */}
         <div className="hidden lg:flex items-center gap-4 text-sm font-semibold">
-          <Link 
-            href="/account" 
-            className={`flex items-center gap-2 transition-colors hover:text-primary ${scrolled ? 'text-white' : 'text-foreground'}`}
-          >
-            <User className="w-4 h-4" />
-            Login / My Account
-          </Link>
+          {session ? (
+            <Link 
+              href="/account" 
+              className={`flex items-center gap-2 transition-colors hover:text-primary ${scrolled ? 'text-white' : 'text-foreground'}`}
+            >
+              {session.user.image ? (
+                <img src={session.user.image} alt={session.user.name} className="w-6 h-6 rounded-full" />
+              ) : (
+                <User className="w-4 h-4" />
+              )}
+              My Account
+            </Link>
+          ) : (
+            <button 
+              onClick={() => setAuthModalOpen(true)}
+              className={`flex items-center gap-2 transition-colors hover:text-primary ${scrolled ? 'text-white' : 'text-foreground'}`}
+            >
+              <User className="w-4 h-4" />
+              Login
+            </button>
+          )}
           <Link 
             href="/sell" 
             className="bg-[#ff6b35] text-white px-5 py-2 rounded-full font-bold hover:bg-[#ff6b35]/90 transition-transform hover:scale-105 shadow-md"
@@ -125,14 +140,28 @@ export default function Navbar() {
                 <hr className="border-white/10" />
                 
                 <div className="flex flex-col gap-4 mt-auto">
-                  <Link 
-                    href="/account" 
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2 text-white font-semibold text-lg"
-                  >
-                    <User className="w-5 h-5" />
-                    Login / My Account
-                  </Link>
+                  {session ? (
+                    <Link 
+                      href="/account" 
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center gap-2 text-white font-semibold text-lg"
+                    >
+                      {session.user.image ? (
+                        <img src={session.user.image} alt={session.user.name} className="w-6 h-6 rounded-full" />
+                      ) : (
+                        <User className="w-5 h-5" />
+                      )}
+                      My Account
+                    </Link>
+                  ) : (
+                    <button 
+                      onClick={() => { setMobileMenuOpen(false); setAuthModalOpen(true); }}
+                      className="flex items-center gap-2 text-white font-semibold text-lg"
+                    >
+                      <User className="w-5 h-5" />
+                      Login
+                    </button>
+                  )}
                   <Link 
                     href="/sell" 
                     onClick={() => setMobileMenuOpen(false)}
@@ -146,6 +175,8 @@ export default function Navbar() {
           </>
         )}
       </AnimatePresence>
+
+      <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
     </>
   );
 }
