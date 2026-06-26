@@ -101,7 +101,7 @@ export default function ThumbnailCarousel({ matches }: { matches: any[] }) {
 
   const items = matches.map((match, i) => ({
     ...match,
-    image: stockImages[i % stockImages.length],
+    image: match.stadium?.imageUrl || stockImages[i % stockImages.length],
     title: `${match.homeTeam?.name || 'TBD'} vs ${match.awayTeam?.name || 'TBD'}`
   }));
 
