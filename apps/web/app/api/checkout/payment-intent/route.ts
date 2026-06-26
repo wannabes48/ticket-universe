@@ -9,7 +9,7 @@ export async function POST(request: Request) {
     }
 
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: '2024-04-10',
+      apiVersion: '2026-06-24.dahlia',
     });
 
     const body = await request.json();

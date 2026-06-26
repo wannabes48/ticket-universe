@@ -3,7 +3,7 @@ import { prisma } from '@ticketuniverse/database';
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: '2024-04-10', // using a typical recent API version
+  apiVersion: '2026-06-24.dahlia',
 });
 
 export async function POST(request: Request) {

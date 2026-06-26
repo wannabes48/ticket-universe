@@ -30,7 +30,7 @@ export default async function SellListPage() {
   let isStripeConnected = false;
   if (user.stripeConnectId && process.env.STRIPE_SECRET_KEY) {
     try {
-      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2024-04-10" });
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2026-06-24.dahlia" });
       const account = await stripe.accounts.retrieve(user.stripeConnectId);
       isStripeConnected = account.details_submitted && (account.requirements?.currently_due?.length ?? 0) === 0;
     } catch (err) {

@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     }
 
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2024-04-10",
+      apiVersion: "2026-06-24.dahlia",
     });
 
     // Get user from DB
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     if (!accountId) {
       const account = await stripe.accounts.create({
         type: "express",
-        email: user.email,
+        email: user.email || undefined,
         capabilities: {
           transfers: { requested: true },
         },
