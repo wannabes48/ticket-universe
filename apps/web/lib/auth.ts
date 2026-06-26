@@ -23,25 +23,29 @@ export const authOptions: NextAuthOptions = {
       },
     }),
     CredentialsProvider({
-      name: "Mock Credentials (Dev Only)",
+      name: "Email and Password",
       credentials: {
-        email: { label: "Email", type: "email", placeholder: "seller@example.com" },
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        if (!credentials?.email) return null;
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Invalid credentials");
+        }
 
-        let user = await prisma.user.findUnique({
+        const user = await prisma.user.findUnique({
           where: { email: credentials.email }
         });
 
-        if (!user) {
-          user = await prisma.user.create({
-            data: {
-              email: credentials.email,
-              name: credentials.email.split('@')[0],
-              role: "SELLER"
-            }
-          });
+        if (!user || !user.hashedPassword) {
+          throw new Error("User not found or no password set");
+        }
+
+        const bcrypt = require("bcryptjs");
+        const isPasswordValid = await bcrypt.compare(credentials.password, user.hashedPassword);
+
+        if (!isPasswordValid) {
+          throw new Error("Invalid password");
         }
 
         return {

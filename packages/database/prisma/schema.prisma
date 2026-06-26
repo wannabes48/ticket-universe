@@ -184,6 +184,7 @@ model User {
   name            String?
   email           String?         @unique
   emailVerified   DateTime?
+  hashedPassword  String?
   image           String?
   role            Role            @default(BUYER)
   stripeConnectId String?
