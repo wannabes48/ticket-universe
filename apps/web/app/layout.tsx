@@ -39,7 +39,7 @@ export default async function RootLayout({
       <body
         className={`${bricolage.variable} font-sans antialiased`}
       >
-        <NextTopLoader color="hsl(var(--primary))" showSpinner={false} />
+        <NextTopLoader color="var(--primary)" height={4} showSpinner={true} />
         <Navbar session={session} />
         {children}
         <Footer />
