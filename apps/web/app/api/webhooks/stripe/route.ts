@@ -2,11 +2,15 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@ticketuniverse/database';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: '2026-06-24.dahlia',
-});
-
 export async function POST(request: Request) {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return NextResponse.json({ error: 'Stripe secret key missing' }, { status: 500 });
+  }
+
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: '2026-06-24.dahlia',
+  });
+
   const payload = await request.text();
   const signature = request.headers.get('stripe-signature');
 
