@@ -2,11 +2,9 @@
 
 import { useRef } from "react";
 import Link from "next/link";
-import MatchCard from "@/components/match-card";
+import ThumbnailCarousel from "@/components/ui/thumbnail-carousel";
 
 export default function UpcomingMatchesCarousel({ matches }: { matches: any[] }) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
   return (
     <div className="w-full py-16 bg-background">
       <div className="max-w-7xl mx-auto px-6">
@@ -20,23 +18,7 @@ export default function UpcomingMatchesCarousel({ matches }: { matches: any[] })
           </Link>
         </div>
 
-        <div 
-          ref={scrollRef}
-          className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 hide-scrollbar"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        >
-          {matches.map(match => (
-            <div key={match.id} className="flex-none w-[85vw] sm:w-[350px] lg:w-[calc(33.333%-16px)] snap-start">
-              <MatchCard match={match} />
-            </div>
-          ))}
-        </div>
-        
-        <style dangerouslySetInnerHTML={{__html: `
-          .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-          }
-        `}} />
+        <ThumbnailCarousel matches={matches} />
       </div>
     </div>
   );
