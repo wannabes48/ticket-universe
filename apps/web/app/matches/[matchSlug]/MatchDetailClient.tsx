@@ -25,10 +25,17 @@ export function TicketTable({ listings, matchSlug }: { listings: any[], matchSlu
   const [activeTab, setActiveTab] = useState("All");
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
 
-  const categories = ["All", "Cat 1", "Cat 2", "Cat 3", "Cat 4"];
+  const categories = [
+    { label: "All",           value: "All"           },
+    { label: "Cat 1",         value: "CAT1"          },
+    { label: "Cat 2",         value: "CAT2"          },
+    { label: "Cat 3",         value: "CAT3"          },
+    { label: "Cat 4",         value: "CAT4"          },
+    { label: "Accessibility", value: "ACCESSIBILITY"  },
+  ];
 
-  const filteredListings = activeTab === "All" 
-    ? listings 
+  const filteredListings = activeTab === "All"
+    ? listings
     : listings.filter(l => l.category === activeTab);
 
   const toggleRow = (id: string) => {
@@ -42,15 +49,15 @@ export function TicketTable({ listings, matchSlug }: { listings: any[], matchSlu
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
         {categories.map(cat => (
           <button
-            key={cat}
-            onClick={() => setActiveTab(cat)}
+            key={cat.value}
+            onClick={() => setActiveTab(cat.value)}
             className={`whitespace-nowrap px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-300 ${
-              activeTab === cat 
-              ? 'bg-primary text-primary-foreground shadow-md' 
+              activeTab === cat.value
+              ? 'bg-primary text-primary-foreground shadow-md'
               : 'bg-muted text-muted-foreground hover:bg-muted/80'
             }`}
           >
-            {cat}
+            {cat.label}
           </button>
         ))}
       </div>
@@ -60,13 +67,13 @@ export function TicketTable({ listings, matchSlug }: { listings: any[], matchSlu
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-muted text-muted-foreground text-sm border-b border-border">
-                <th className="p-4 font-semibold w-12"></th>
-                <th className="p-4 font-semibold">Category</th>
-                <th className="p-4 font-semibold">Section/Row</th>
-                <th className="p-4 font-semibold text-center">Qty</th>
-                <th className="p-4 font-semibold text-right">Price/ea</th>
-                <th className="p-4 font-semibold text-center">Action</th>
+              <tr className="bg-muted text-muted-foreground text-xs uppercase tracking-wider border-b border-border">
+                <th className="px-4 py-3 font-semibold text-left w-40">Category</th>
+                <th className="px-4 py-3 font-semibold text-left hidden md:table-cell">Section</th>
+                <th className="px-4 py-3 font-semibold text-left hidden md:table-cell">Row</th>
+                <th className="px-4 py-3 font-semibold text-center">Qty</th>
+                <th className="px-4 py-3 font-semibold text-right">Price/ea</th>
+                <th className="px-4 py-3 font-semibold text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">

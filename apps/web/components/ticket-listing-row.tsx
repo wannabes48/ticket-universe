@@ -35,32 +35,32 @@ export function TicketListingRow({ listing, matchSlug, isExpanded, onToggle }: T
           isExpanded ? "bg-primary/5" : ""
         )}
       >
-        <td className="p-4 font-bold">
+        <td className="px-4 py-3 font-semibold">
           <div className="flex items-center gap-2">
             <span className={cn(
-              "w-2 h-2 rounded-full",
+              "w-2 h-2 rounded-full shrink-0",
               listing.category === 'CAT1' ? "bg-purple-500" :
               listing.category === 'CAT2' ? "bg-blue-500" :
-              listing.category === 'CAT3' ? "bg-green-500" : "bg-orange-500"
+              listing.category === 'CAT3' ? "bg-green-500" :
+              listing.category === 'ACCESSIBILITY' ? "bg-yellow-500" : "bg-orange-500"
             )} />
-            {listing.category.replace('CAT', 'Cat ')}
+            {listing.category.replace('CAT', 'Cat ').replace('ACCESSIBILITY', 'Access.')}
           </div>
         </td>
-        <td className="p-4 hidden md:table-cell">{listing.section || 'TBD'}</td>
-        <td className="p-4 hidden md:table-cell">{listing.row || 'TBD'}</td>
-        <td className="p-4 font-bold">{listing.quantity}</td>
-        <td className="p-4 font-bold text-primary">${listing.pricePerTicket}</td>
-        <td className="p-4 font-black hidden sm:table-cell">${listing.pricePerTicket * listing.quantity}</td>
-        <td className="p-4 text-right">
-          <div className="flex items-center justify-end gap-3">
-            <Button 
+        <td className="px-4 py-3 text-muted-foreground hidden md:table-cell">{listing.section || '—'}</td>
+        <td className="px-4 py-3 text-muted-foreground hidden md:table-cell">{listing.row || '—'}</td>
+        <td className="px-4 py-3 text-center font-bold">{listing.quantity}</td>
+        <td className="px-4 py-3 text-right font-bold text-primary">${listing.pricePerTicket.toFixed(2)}</td>
+        <td className="px-4 py-3 text-right">
+          <div className="flex items-center justify-end gap-2">
+            <Button
               size="sm"
               isLoading={isPending}
               onClick={handleBuy}
             >
               Buy
             </Button>
-            {isExpanded ? <ChevronUp className="w-5 h-5 text-muted-foreground" /> : <ChevronDown className="w-5 h-5 text-muted-foreground" />}
+            {isExpanded ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
           </div>
         </td>
       </tr>
