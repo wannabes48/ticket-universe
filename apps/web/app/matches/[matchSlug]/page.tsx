@@ -97,11 +97,11 @@ export default async function MatchDetailPage({ params }: { params: { matchSlug:
         
         {/* Left Column: Tickets & Filter */}
         <div className="lg:col-span-2 space-y-8">
-          <div className="flex items-center justify-between mb-4 mt-12">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 md:gap-4 mb-4 mt-12">
             <h2 className="text-2xl font-bold flex items-center gap-2">
               <Image src="/custom-ticket.png" alt="Ticket" width={24} height={24} /> Available Tickets
             </h2>
-            <p className="text-muted-foreground">Prices include all taxes. A 10% service fee applies at checkout.</p>
+            <p className="text-sm text-muted-foreground">Prices include all taxes. A 10% service fee applies at checkout.</p>
           </div>
 
           <TicketTable listings={match.listings} matchSlug={match.slug} />
