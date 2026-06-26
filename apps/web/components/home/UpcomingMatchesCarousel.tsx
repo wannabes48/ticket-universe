@@ -13,7 +13,7 @@ export default function UpcomingMatchesCarousel({ matches }: { matches: any[] })
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>
             <h2 className="text-3xl font-bold text-foreground mb-2">Upcoming Matches</h2>
-            <p className="text-muted-foreground">320,000+ Tickets Available</p>
+            <p className="text-muted-foreground">1,000+ Tickets Available</p>
           </div>
           <Link href="/matches" className="text-primary font-medium hover:underline flex items-center gap-1">
             View All Matches &rarr;

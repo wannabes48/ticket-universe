@@ -21,9 +21,9 @@ export default function BrowseByCity({ stadiums }: { stadiums: StadiumWithMatche
   }, {} as Record<string, typeof stadiums>);
 
   const countries = [
-    { code: 'USA', name: 'United States', count: 11 },
-    { code: 'MEX', name: 'Mexico', count: 3 },
-    { code: 'CAN', name: 'Canada', count: 2 },
+    { code: 'US', name: 'United States', count: 11 },
+    { code: 'MX', name: 'Mexico', count: 3 },
+    { code: 'CA', name: 'Canada', count: 2 },
   ];
 
   return (
@@ -31,7 +31,9 @@ export default function BrowseByCity({ stadiums }: { stadiums: StadiumWithMatche
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-12">
           <h2 className="text-3xl font-bold text-foreground mb-4">Host Cities & Stadiums</h2>
-          <p className="text-muted-foreground max-w-2xl">Experience the tournament across North America. 16 incredible host cities spanning the United States, Mexico, and Canada.</p>
+          <p className="text-muted-foreground max-w-3xl leading-relaxed">
+            The 2026 FIFA World Cup spans 104 matches hosted across 16 world-class stadiums in 16 cities across the United States, Mexico, and Canada. The tournament is the largest in history, concluding with the final on July 19, 2026, at the New York New Jersey Stadium.
+          </p>
         </div>
 
         <div className="space-y-16">
@@ -69,7 +71,7 @@ export default function BrowseByCity({ stadiums }: { stadiums: StadiumWithMatche
                           <p className="text-sm text-muted-foreground font-medium mb-4 line-clamp-1">{stadium.name}</p>
                           <div className="flex justify-between items-center text-sm">
                             <span className="font-semibold bg-muted px-2 py-1 rounded">{stadium.matchCount} Matches</span>
-                            <span className="text-primary font-medium group-hover:translate-x-1 transition-transform">Explore &rarr;</span>
+                            <span className="text-primary font-medium group-hover:translate-x-1 transition-transform">View Matches &rarr;</span>
                           </div>
                         </div>
                       </div>

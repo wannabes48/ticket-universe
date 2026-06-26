@@ -1,6 +1,6 @@
 [
   {
-    "name": "BC Place",
+    "name": "BC Place Vancouver",
     "slug": "bc-place",
     "city": "Vancouver",
     "countryCode": "CA",
@@ -8,7 +8,7 @@
     "address": "777 Pacific Blvd, Vancouver, BC V6B 4Y8, Canada"
   },
   {
-    "name": "BMO Field",
+    "name": "Toronto Stadium (BMO Field)",
     "slug": "bmo-field",
     "city": "Toronto",
     "countryCode": "CA",
@@ -16,7 +16,7 @@
     "address": "170 Princes' Blvd, Toronto, ON M6K 3C3, Canada"
   },
   {
-    "name": "Estadio Azteca",
+    "name": "Mexico City Stadium (Estadio Azteca)",
     "slug": "estadio-azteca",
     "city": "Mexico City",
     "countryCode": "MX",
@@ -24,7 +24,7 @@
     "address": "Calz. de Tlalpan 3465, Sta. Úrsula Coapa, Coyoacán, 04650 Ciudad de México, CDMX, Mexico"
   },
   {
-    "name": "Estadio Akron",
+    "name": "Guadalajara Stadium (Estadio Akron)",
     "slug": "estadio-akron",
     "city": "Guadalajara",
     "countryCode": "MX",
@@ -32,7 +32,7 @@
     "address": "Circuito J.V.C. 2800, El Bajío, 45014 Zapopan, Jalisco, Mexico"
   },
   {
-    "name": "Estadio BBVA Bancomer",
+    "name": "Monterrey Stadium (Estadio BBVA)",
     "slug": "estadio-bbva",
     "city": "Monterrey",
     "countryCode": "MX",
@@ -40,7 +40,7 @@
     "address": "Av. Pablo Livas 2011, colonia La Pastora, C.P. 67140, en Guadalupe, Nuevo León, Mexico"
   },
   {
-    "name": "Mercedes-Benz Stadium",
+    "name": "Atlanta Stadium (Mercedes-Benz Stadium)",
     "slug": "mercedes-benz-stadium",
     "city": "Atlanta",
     "countryCode": "US",
@@ -48,7 +48,7 @@
     "address": "1 AMB Dr NW, Atlanta, GA 30313, USA"
   },
   {
-    "name": "Gillette Stadium",
+    "name": "Boston Stadium (Gillette Stadium)",
     "slug": "gillette-stadium",
     "city": "Boston",
     "countryCode": "US",
@@ -56,7 +56,7 @@
     "address": "1 Patriot Pl, Foxborough, MA 02035, USA"
   },
   {
-    "name": "AT&T Stadium",
+    "name": "Dallas Stadium (AT&T Stadium)",
     "slug": "att-stadium",
     "city": "Dallas",
     "countryCode": "US",
@@ -64,7 +64,7 @@
     "address": "1 AT&T Way, Arlington, TX 76011, USA"
   },
   {
-    "name": "NRG Stadium",
+    "name": "Houston Stadium (NRG Stadium)",
     "slug": "nrg-stadium",
     "city": "Houston",
     "countryCode": "US",
@@ -72,7 +72,7 @@
     "address": "NRG Pkwy, Houston, TX 77054, USA"
   },
   {
-    "name": "Arrowhead Stadium",
+    "name": "Kansas City Stadium (Arrowhead Stadium)",
     "slug": "arrowhead-stadium",
     "city": "Kansas City",
     "countryCode": "US",
@@ -80,7 +80,7 @@
     "address": "1 Arrowhead Dr, Kansas City, MO 64129, USA"
   },
   {
-    "name": "SoFi Stadium",
+    "name": "Los Angeles Stadium (SoFi Stadium)",
     "slug": "sofi-stadium",
     "city": "Los Angeles",
     "countryCode": "US",
@@ -88,7 +88,7 @@
     "address": "1001 Stadium Dr, Inglewood, CA 90301, USA"
   },
   {
-    "name": "Hard Rock Stadium",
+    "name": "Miami Stadium (Hard Rock Stadium)",
     "slug": "hard-rock-stadium",
     "city": "Miami",
     "countryCode": "US",
@@ -96,7 +96,7 @@
     "address": "347 Don Shula Dr, Miami Gardens, FL 33056, USA"
   },
   {
-    "name": "MetLife Stadium",
+    "name": "New York New Jersey Stadium (MetLife Stadium)",
     "slug": "metlife-stadium",
     "city": "New York/New Jersey",
     "countryCode": "US",
@@ -104,7 +104,7 @@
     "address": "1 MetLife Stadium Dr, East Rutherford, NJ 07073, USA"
   },
   {
-    "name": "Lincoln Financial Field",
+    "name": "Philadelphia Stadium (Lincoln Financial Field)",
     "slug": "lincoln-financial-field",
     "city": "Philadelphia",
     "countryCode": "US",
@@ -112,7 +112,7 @@
     "address": "One Lincoln Financial Field Way, Philadelphia, PA 19148, USA"
   },
   {
-    "name": "Levi's Stadium",
+    "name": "San Francisco Bay Area Stadium (Levi's Stadium)",
     "slug": "levis-stadium",
     "city": "San Francisco",
     "countryCode": "US",
@@ -120,7 +120,7 @@
     "address": "4900 Marie P DeBartolo Way, Santa Clara, CA 95054, USA"
   },
   {
-    "name": "Lumen Field",
+    "name": "Seattle Stadium (Lumen Field)",
     "slug": "lumen-field",
     "city": "Seattle",
     "countryCode": "US",
