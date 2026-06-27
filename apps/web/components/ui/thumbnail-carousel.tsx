@@ -79,6 +79,9 @@ function Thumbnails({ index, setIndex, items }: { index: number, setIndex: (i: n
 
 function PremiumSlide({ item, isActive }: { item: any; isActive: boolean }) {
   const pricing = getPricingForRound(item.round);
+  const minPrice = item.listings && item.listings.length > 0 
+    ? item.listings[0].pricePerTicket 
+    : pricing.min;
 
   return (
     <div className='shrink-0 w-full h-[520px] sm:h-[560px] relative overflow-hidden'>
@@ -100,7 +103,7 @@ function PremiumSlide({ item, isActive }: { item: any; isActive: boolean }) {
 
       {/* From price badge */}
       <div className="absolute top-5 right-5 z-10 bg-primary text-primary-foreground text-xs font-black uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg">
-        From ${pricing.min.toLocaleString()}
+        From ${minPrice.toLocaleString()}
       </div>
 
       {/* Bottom info panel — fused with the card */}

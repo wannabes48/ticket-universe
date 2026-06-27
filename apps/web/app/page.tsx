@@ -22,6 +22,11 @@ export default async function Home() {
       homeTeam: true,
       awayTeam: true,
       stadium: true,
+      listings: {
+        where: { status: 'ACTIVE' },
+        orderBy: { pricePerTicket: 'asc' },
+        take: 1
+      }
     },
     take: 12,
     orderBy: { kickoffUtc: 'asc' }
