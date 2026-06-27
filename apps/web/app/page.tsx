@@ -11,6 +11,8 @@ import BuyerProtection from "@/components/home/BuyerProtection";
 import TournamentInfo from "@/components/home/TournamentInfo";
 import FaqAccordion from "@/components/home/FaqAccordion";
 
+export const revalidate = 60;
+
 export default async function Home() {
   const upcomingMatches = await prisma.match.findMany({
     where: {
