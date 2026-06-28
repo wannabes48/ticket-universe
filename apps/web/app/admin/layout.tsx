@@ -5,11 +5,20 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 
 import { authOptions } from "@/lib/auth";
+import { prisma } from "@ticketuniverse/database";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
   
-  if (!session || session.user?.email !== 'admin@ticketuniverse.com') {
+  if (!session || !session.user?.email) {
+    redirect("/");
+  }
+
+  const dbUser = await prisma.user.findUnique({
+    where: { email: session.user.email }
+  });
+
+  if (!dbUser || dbUser.role !== 'ADMIN') {
     redirect("/");
   }
 
