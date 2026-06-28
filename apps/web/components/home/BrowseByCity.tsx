@@ -51,8 +51,10 @@ export default function BrowseByCity({ stadiums }: { stadiums: StadiumWithMatche
                 </div>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {countryStadiums.map(stadium => (
-                    <Link href={`/cities/${stadium.slug}`} key={stadium.id} className="group h-full block">
+                  {countryStadiums.map(stadium => {
+                    const citySlug = stadium.city.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                    return (
+                      <Link href={`/cities/${citySlug}`} key={stadium.id} className="group h-full block">
                       <div className="bg-card border border-border rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col h-full">
                         <div className="h-40 w-full relative bg-muted">
                           {stadium.imageUrl ? (
@@ -76,7 +78,7 @@ export default function BrowseByCity({ stadiums }: { stadiums: StadiumWithMatche
                         </div>
                       </div>
                     </Link>
-                  ))}
+                  )})}
                 </div>
               </div>
             )
