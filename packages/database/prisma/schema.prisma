@@ -94,6 +94,7 @@ model TicketListing {
   currency       String
   deliveryMethod DeliveryMethod
   status         ListingStatus  @default(ACTIVE)
+  createdAt      DateTime       @default(now())
   
   match          Match          @relation(fields: [matchId], references: [id])
   seller         User?          @relation(fields: [sellerId], references: [id], onDelete: Cascade)
@@ -116,6 +117,8 @@ model Order {
   refundProtection     Boolean       @default(false)
   status               OrderStatus   @default(PENDING)
   ticketHolders        Json?
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @default(now()) @updatedAt
   
   listing              TicketListing @relation(fields: [listingId], references: [id])
 }
