@@ -4,10 +4,14 @@ import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 
+import { authOptions } from "@/lib/auth";
+
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  // TODO: Verify if user is an ADMIN. For now, we will allow rendering to build the UI.
-  // const session = await getServerSession();
-  // if (!session || session.user.role !== 'ADMIN') redirect("/");
+  const session = await getServerSession(authOptions);
+  
+  if (!session || session.user?.email !== 'admin@ticketuniverse.com') {
+    redirect("/");
+  }
 
   return (
     <div className="min-h-screen bg-muted/20 flex flex-col md:flex-row pt-20">

@@ -19,8 +19,7 @@ export default async function AdminDashboardPage() {
     _sum: { total: true },
     _count: { id: true },
     where: { 
-      status: { in: ['PAID', 'COMPLETED', 'DELIVERED'] },
-      createdAt: { gte: startOfToday }
+      status: { in: ['PAID', 'COMPLETED', 'DELIVERED'] }
     }
   });
 
@@ -28,8 +27,7 @@ export default async function AdminDashboardPage() {
     _sum: { total: true },
     _count: { id: true },
     where: { 
-      status: { in: ['PAID', 'COMPLETED', 'DELIVERED'] },
-      createdAt: { gte: startOfWeek }
+      status: { in: ['PAID', 'COMPLETED', 'DELIVERED'] }
     }
   });
 
