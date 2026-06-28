@@ -117,6 +117,7 @@ model Order {
   refundProtection     Boolean       @default(false)
   status               OrderStatus   @default(PENDING)
   ticketHolders        Json?
+  internalNote         String?
   createdAt            DateTime      @default(now())
   updatedAt            DateTime      @default(now()) @updatedAt
   

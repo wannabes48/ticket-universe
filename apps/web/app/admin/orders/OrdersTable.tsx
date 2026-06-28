@@ -2,19 +2,21 @@
 
 import { useState } from "react";
 import { format } from "date-fns";
-import { Search, MoreVertical, X, Check, AlertTriangle, Undo2 } from "lucide-react";
-import { refundOrder, markOrderDelivered, openOrderDispute } from "../actions";
+import { Search, MoreVertical, X, Check, AlertTriangle, Undo2, Save } from "lucide-react";
+import { refundOrder, markOrderDelivered, openOrderDispute, updateOrderNote } from "../actions";
 
 export default function OrdersTable({ orders }: { orders: any[] }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("ALL");
   const [selectedOrder, setSelectedOrder] = useState<any | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [internalNote, setInternalNote] = useState("");
 
   const filteredOrders = orders.filter(order => {
     const matchesSearch = 
       order.reference.toLowerCase().includes(searchTerm.toLowerCase()) || 
       order.buyerEmail.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (order.buyerPhone || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
       order.matchTitle.toLowerCase().includes(searchTerm.toLowerCase());
     
     const matchesStatus = filterStatus === "ALL" || order.status === filterStatus;
@@ -101,7 +103,10 @@ export default function OrdersTable({ orders }: { orders: any[] }) {
                   <td className="px-6 py-4 text-muted-foreground">{format(new Date(order.createdAt), "MMM d, yyyy HH:mm")}</td>
                   <td className="px-6 py-4 text-right">
                     <button 
-                      onClick={() => setSelectedOrder(order)}
+                      onClick={() => {
+                        setSelectedOrder(order);
+                        setInternalNote(order.internalNote || "");
+                      }}
                       className="text-primary hover:underline font-medium text-xs"
                     >
                       View Details
@@ -134,6 +139,7 @@ export default function OrdersTable({ orders }: { orders: any[] }) {
                   <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2">Buyer Info</h3>
                   <div className="font-medium">{selectedOrder.buyerName}</div>
                   <div className="text-sm text-muted-foreground">{selectedOrder.buyerEmail}</div>
+                  {selectedOrder.buyerPhone && <div className="text-sm text-muted-foreground">{selectedOrder.buyerPhone}</div>}
                 </div>
                 <div>
                   <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2">Match Info</h3>
@@ -165,16 +171,41 @@ export default function OrdersTable({ orders }: { orders: any[] }) {
               </div>
             </div>
 
-            <div className="p-6 border-t border-border bg-muted/20 flex flex-wrap gap-3">
-              {selectedOrder.status !== 'REFUNDED' && (
-                <button 
-                  onClick={() => handleAction(refundOrder, selectedOrder.id)}
-                  disabled={isUpdating}
-                  className="flex items-center gap-2 px-4 py-2 bg-destructive text-destructive-foreground font-bold text-sm rounded-lg hover:bg-destructive/90 disabled:opacity-50"
-                >
-                  <Undo2 className="w-4 h-4" /> Issue Refund
-                </button>
-              )}
+            <div className="p-6 border-t border-border space-y-4">
+              <div>
+                <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2">Internal Admin Note</h3>
+                <div className="flex gap-2">
+                  <input 
+                    type="text" 
+                    value={internalNote}
+                    onChange={(e) => setInternalNote(e.target.value)}
+                    placeholder="Add a private note about this order..."
+                    className="flex-1 px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  />
+                  <button 
+                    onClick={() => handleAction(async (id) => {
+                      await updateOrderNote(id, internalNote);
+                      // Update local state to reflect change without closing modal
+                      setSelectedOrder({...selectedOrder, internalNote});
+                    }, selectedOrder.id)}
+                    disabled={isUpdating || internalNote === (selectedOrder.internalNote || "")}
+                    className="flex items-center gap-2 px-4 py-2 bg-muted text-foreground font-bold text-sm rounded-lg hover:bg-muted/80 disabled:opacity-50"
+                  >
+                    <Save className="w-4 h-4" /> Save Note
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-3 pt-2">
+                {selectedOrder.status !== 'REFUNDED' && (
+                  <button 
+                    onClick={() => handleAction(refundOrder, selectedOrder.id)}
+                    disabled={isUpdating}
+                    className="flex items-center gap-2 px-4 py-2 bg-destructive text-destructive-foreground font-bold text-sm rounded-lg hover:bg-destructive/90 disabled:opacity-50"
+                  >
+                    <Undo2 className="w-4 h-4" /> Issue Refund
+                  </button>
+                )}
               {selectedOrder.status !== 'DISPUTED' && (
                 <button 
                   onClick={() => handleAction(openOrderDispute, selectedOrder.id)}

@@ -27,6 +27,7 @@ export default async function AdminOrdersPage() {
     reference: order.reference,
     buyerEmail: order.buyerEmail,
     buyerName: order.buyerName,
+    buyerPhone: order.buyerPhone,
     matchTitle: `${order.listing.match.homeTeam.name} vs ${order.listing.match.awayTeam.name}`,
     total: order.total,
     currency: order.currency,
@@ -38,6 +39,8 @@ export default async function AdminOrdersPage() {
     sellerEmail: order.listing.seller?.email || 'Admin Inventory',
     quantity: order.quantity,
     ticketCategory: order.listing.category,
+    // @ts-ignore
+    internalNote: order.internalNote || '',
   }));
 
   return (

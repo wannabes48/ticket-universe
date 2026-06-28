@@ -28,6 +28,15 @@ export async function openOrderDispute(orderId: string) {
   revalidatePath("/admin/orders");
 }
 
+export async function updateOrderNote(orderId: string, note: string) {
+  // @ts-ignore: bypass local prisma type cache
+  await prisma.order.update({
+    where: { id: orderId },
+    data: { internalNote: note }
+  });
+  revalidatePath("/admin/orders");
+}
+
 // --- Listing Actions ---
 export async function approveListing(listingId: string) {
   await prisma.ticketListing.update({
